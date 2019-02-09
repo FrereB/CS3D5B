@@ -3,6 +3,7 @@ package trinity.cs3d5b.quizz;
 import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
@@ -12,10 +13,9 @@ import android.net.*;
 import android.widget.*;
 import android.graphics.*;
 
-public class LoginPage extends AppCompatActivity {
+public class LoginPage extends AppCompatActivity implements View.OnClickListener {
 
-    public static final int IMAGE_GALLERY_REQUEST = 20;
-    private ImageView imgPicture;
+    private  static ImageView imgPicture;
 
 
     @Override
@@ -23,61 +23,38 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        //get a reference to the image view that the user will see
-        imgPicture = (ImageView) findViewById(R.id.imgPicture);
+        ImageView optionman = (ImageView) findViewById(R.id.PictureMan);
+        optionman.setOnClickListener(this);
+        ImageView optionwoman = (ImageView) findViewById(R.id.PictureWoman);
+        optionwoman.setOnClickListener(this);
+
     }
 
 
-    protected void goToAnActivity(View view) {
+    @Override
+    public void onClick(View view) {
+        switch(view.getId()){
+            case R.id.PictureMan :
+                Toast.makeText(this,"Clicked optionman",Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.PictureWoman :
+                Toast.makeText(this,"Clicked optionwoman",Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+    }
+
+
+    protected void goToMainActivity(View view) {
         Intent intent = new Intent(this, MainActivity.class);
+
         startActivity(intent);
     }
 
-    /**
-     * This method will be invoked when the user clicks to choose his picture
-     * @param view
-     */
-
-    protected void onImageGalleryClicked(View view) {
-        Intent intentPhoto = new Intent(Intent.ACTION_PICK);
-        File pictureDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);//localisation of the data
-        String path = pictureDirectory.getPath();
-        //Get a URI representation
-        Uri data = Uri.parse(path);
-
-        //set the data and type(all image types)
-
-        intentPhoto.setDataAndType(data,"image/*");
-
-        //We will invoke this activity
-
-        startActivityForResult(intentPhoto,IMAGE_GALLERY_REQUEST);
-
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode ==RESULT_OK) {// everything processed successfully
-            if (requestCode == IMAGE_GALLERY_REQUEST) { //
-
-                Uri imageUri = data.getData();//The address of the image on the SD card
-
-                //Declare a stream to read the image data from the SD card
-                InputStream inputStream;
-                try {
-                    inputStream = getContentResolver().openInputStream(imageUri);
-                    Bitmap image = BitmapFactory.decodeStream(inputStream);
-
-                    //Show the image to the user
-                    imgPicture.setImageBitmap(image);
 
 
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                    Toast.makeText(this,"Unable to open image", (Toast.LENGTH_LONG));
-                }
-
-            }
-        }
-    }
 }
+
+
+
