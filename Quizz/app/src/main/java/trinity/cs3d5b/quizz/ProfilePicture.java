@@ -30,7 +30,7 @@ public class ProfilePicture extends AppCompatActivity {
                 mIntent.putExtras(stats);
                 setResult(RESULT_OK, mIntent);
                 finish();
-
+//test
 
             case R.id.Picture2 :
                 String num2 = "women";
