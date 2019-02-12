@@ -42,14 +42,29 @@ public class LoginPage extends AppCompatActivity  {
 
 
                ImageView ImageView1 = (ImageView) findViewById(R.id.picturechoose);
-               if(picture.equals("men")) {
-                   ImageView1.setImageDrawable(getDrawable(R.drawable.picturemen));
+               if(picture.equals("avatar1")) {
+                   ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
                }
 
-                if(picture.equals("women")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.picturewomen));
+                if(picture.equals("avatar2")) {
+                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar2));
                 }
 
+                if(picture.equals("avatar3")) {
+                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
+                }
+
+                if(picture.equals("avatar4")) {
+                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
+                }
+
+                if(picture.equals("avatar5")) {
+                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
+                }
+
+                if(picture.equals("avatar6")) {
+                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
+                }
             }
         }
     }
