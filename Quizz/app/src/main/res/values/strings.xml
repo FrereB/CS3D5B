@@ -13,4 +13,13 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="answer1">Answer 1</string>
+    <string name="answer2">Answer 2</string>
+    <string name="answer3">Answer 3</string>
+    <string name="answer4">Answer 4</string>
+    <string name="question1">Which of these is the right answer?</string>
+    <string name="new_quiz">New Quiz</string>
+    <string name="score">Score</string>
+    <string name="game_over">Game Over! You got a score of</string>
+    <string name="reset_quiz">Reset Quiz</string>
 </resources>
