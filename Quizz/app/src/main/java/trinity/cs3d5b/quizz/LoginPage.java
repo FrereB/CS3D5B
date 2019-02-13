@@ -4,7 +4,6 @@ package trinity.cs3d5b.quizz;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
-import android.util.*;
 import android.content.*;
 import android.widget.*;
 
