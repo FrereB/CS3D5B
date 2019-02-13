@@ -15,18 +15,9 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:hint="Please enter your pseudo"
+            android:hint="Username"
             android:inputType="textPersonName" />
 
-
-        <EditText
-            android:id="@+id/password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp"
-            android:hint="Please enter your password"
-            android:inputType="textPassword" />
 
     <ImageView
         android:id="@+id/picturechoose"
@@ -38,29 +29,27 @@
 
 
     <Button
-        android:id="@+id/buttonpicture"
+        android:id="@+id/buttonPicture"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dip"
-        android:layout_marginRight="25dip"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dip"
         android:layout_marginTop="200dp"
-        android:layout_weight="1"
-        android:text="Choose a picture"
+        android:layout_marginRight="25dip"
         android:onClick="goToPicture"
-
-        />
+        android:text="Choose a picture" />
 
 
     <Button
         android:id="@+id/buttonSignin"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dip"
         android:layout_marginRight="25dip"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="300dp"
-        android:layout_weight="1"
         android:onClick="goToMainActivity"
         android:text="Go on"
 
