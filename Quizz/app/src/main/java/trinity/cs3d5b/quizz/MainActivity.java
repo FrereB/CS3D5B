@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,11 +29,47 @@ public class MainActivity extends AppCompatActivity {
     private boolean gameOver = false;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        // Get the Intent that started this activity and extract the string
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(LoginPage.EXTRA_NAME);
+        String image = intent.getStringExtra(LoginPage.EXTRA_PICTURE);
+
+        ImageView ImageView1 = (ImageView) findViewById(R.id.pictureprofile);
+        if(image.equals("avatar1")) {
+            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+
+        }
+
+        if(image.equals("avatar2")) {
+            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+        }
+
+        if(image.equals("avatar3")) {
+            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
+        }
+
+        if(image.equals("avatar4")) {
+            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
+        }
+
+        if(image.equals("avatar5")) {
+            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
+        }
+
+        if(image.equals("avatar6")) {
+            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
+        }
+
+        // Capture the layout's TextView and set the string as its text
+        TextView textView = findViewById(R.id.pseudo);
+        textView.setText(name);
+
 
         mScoreView = findViewById(R.id.score);
         mQuestionView = findViewById(R.id.question);
@@ -45,78 +82,78 @@ public class MainActivity extends AppCompatActivity {
         updateQuestion();
 
         //Start of Button Listener for Button1
-        mButtonChoice1.setOnClickListener(new View.OnClickListener(){
+        mButtonChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if (mButtonChoice1.getText() == mAnswer){
+                if (mButtonChoice1.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
                     Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
         });
 
-        mButtonChoice2.setOnClickListener(new View.OnClickListener(){
+        mButtonChoice2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if (mButtonChoice2.getText() == mAnswer){
+                if (mButtonChoice2.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
                     Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
         });
 
-        mButtonChoice3.setOnClickListener(new View.OnClickListener(){
+        mButtonChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if (mButtonChoice3.getText() == mAnswer){
+                if (mButtonChoice3.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
                     Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
         });
 
-        mButtonChoice4.setOnClickListener(new View.OnClickListener(){
+        mButtonChoice4.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
 
-                if (mButtonChoice4.getText() == mAnswer){
+                if (mButtonChoice4.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
                     //This line of code is optional
                     Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
 
-                }else {
+                } else {
                     Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
         });
 
-        mQuitButton.setOnClickListener(new View.OnClickListener(){
+        mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
@@ -129,9 +166,9 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateQuestion(){
+    private void updateQuestion() {
 
-        if(!gameOver) {
+        if (!gameOver) {
             mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
             mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber));
             mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber));
@@ -146,9 +183,7 @@ public class MainActivity extends AppCompatActivity {
 
                 gameOver = true;
             }
-        }
-
-        else{
+        } else {
             Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
             String scoreMessage = Integer.toString(mScore);
@@ -163,4 +198,6 @@ public class MainActivity extends AppCompatActivity {
     private void updateScore() {
         mScoreView.setText("" + mScore);
     }
+
+
 }

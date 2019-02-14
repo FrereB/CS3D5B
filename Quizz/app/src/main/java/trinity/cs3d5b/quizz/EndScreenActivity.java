@@ -5,12 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class EndScreenActivity extends AppCompatActivity {
 
+    public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     Button resetButton;
 
     @Override
@@ -25,14 +27,16 @@ public class EndScreenActivity extends AppCompatActivity {
         String scoreMessage = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
 
         // Capture the layout's TextView and set the string as its text
-        TextView textView = findViewById(R.id.textView2);
+        final TextView textView = findViewById(R.id.textView2);
         textView.setText(scoreMessage);
 
         resetButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 Toast.makeText(EndScreenActivity.this, "New Game", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(EndScreenActivity.this, MainActivity.class);
+
+                Intent intent = new Intent(EndScreenActivity.this,LoginPage.class);
+
                 startActivity(intent);
             }
         });

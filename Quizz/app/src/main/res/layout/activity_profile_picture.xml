@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,83 +7,105 @@
     android:orientation ="vertical"
     tools:context=".ProfilePicture">
 
-
-    <ImageView
-        android:id="@+id/Picture1"
-        android:layout_width="137dp"
-        android:layout_height="175dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="150dp"
-        android:clickable="true"
-        android:onClick="imageClick"
-        android:src="@drawable/avatar1" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="50dp"
 
 
-    <ImageView
-        android:id="@+id/Picture2"
-        android:layout_width="135dp"
-        android:layout_height="178dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="225dp"
-        android:layout_marginTop="150dp"
-        android:clickable="true"
-        android:onClick="imageClick"
-        android:src="@drawable/avatar2" />
+        >
 
 
-    <ImageView
-        android:id="@+id/Picture3"
-        android:layout_width="135dp"
-        android:layout_height="178dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="300dp"
-        android:clickable="true"
-        android:onClick="imageClick"
-        android:src="@drawable/avatar3" />
+        <ImageView
+            android:id="@+id/Picture1"
+            android:layout_width="137dp"
+            android:layout_height="175dp"
+            android:layout_alignParentLeft="true"
+            android:clickable="true"
+            android:onClick="imageClick"
+            android:src="@drawable/avatar1" />
 
 
-    <ImageView
-        android:id="@+id/Picture4"
-        android:layout_width="135dp"
-        android:layout_height="178dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="225dp"
-        android:layout_marginTop="300dp"
-        android:clickable="true"
-        android:onClick="imageClick"
-        android:src="@drawable/avatar4" />
+        <ImageView
+            android:id="@+id/Picture2"
+            android:layout_width="137dp"
+            android:layout_height="175dp"
+            android:layout_alignParentRight="true"
+            android:clickable="true"
+            android:onClick="imageClick"
+            android:src="@drawable/avatar2" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="50dp"
+       >
 
 
-    <ImageView
-        android:id="@+id/Picture5"
-        android:layout_width="135dp"
-        android:layout_height="176dp"
-        android:layout_alignParentLeft="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="55dp"
-        android:layout_marginTop="450dp"
-        android:clickable="true"
-        android:onClick="imageClick"
-        android:src="@drawable/avatar5" />
+        <ImageView
+            android:id="@+id/Picture3"
+            android:layout_width="137dp"
+            android:layout_height="175dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="imageClick"
+            android:src="@drawable/avatar3" />
+
+
+        <ImageView
+            android:id="@+id/Picture4"
+            android:layout_width="137dp"
+            android:layout_height="175dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerHorizontal="true"
+            android:clickable="true"
+            android:onClick="imageClick"
+            android:src="@drawable/avatar4" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="80dp"
+        android:layout_marginTop="-60dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="50dp"
+        >
+
+
+        <ImageView
+            android:id="@+id/Picture5"
+            android:layout_width="137dp"
+            android:layout_height="175dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="11dp"
+            android:clickable="true"
+            android:onClick="imageClick"
+            android:src="@drawable/avatar5" />
 
 
     <ImageView
         android:id="@+id/Picture6"
-        android:layout_width="135dp"
-        android:layout_height="176dp"
-        android:layout_alignParentLeft="true"
+        android:layout_width="137dp"
+        android:layout_height="175dp"
+        android:layout_alignParentRight="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="220dp"
-        android:layout_marginTop="450dp"
         android:clickable="true"
         android:onClick="imageClick"
         android:src="@drawable/avatar6" />
 
+    </RelativeLayout>
 
 
 
@@ -94,4 +116,5 @@
 
 
 
-</RelativeLayout>
+
+</LinearLayout>
