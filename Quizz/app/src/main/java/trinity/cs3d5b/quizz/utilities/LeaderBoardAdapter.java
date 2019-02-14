@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -42,7 +43,9 @@ public class LeaderBoardAdapter extends ArrayAdapter<JSONObject> {
         JSONObject jsonObject =getItem(position);
         try {
             ((TextView) convertView.findViewById(R.id.name)).setText(jsonObject.getString("name"));
-            ((TextView) convertView.findViewById(R.id.scored)).setText(jsonObject.getString("score"));
+            ((TextView) convertView.findViewById(R.id.score)).setText(jsonObject.getString("score"));
+            int id = context.getResources().getIdentifier(jsonObject.getString("picture"), "drawable", context.getPackageName());
+            ((ImageView) convertView.findViewById(R.id.picture)).setImageResource(id);
         } catch (Exception e){}
 
         return convertView;

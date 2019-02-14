@@ -5,6 +5,12 @@ import android.widget.*;
 import android.util.*;
 import android.os.Bundle;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import trinity.cs3d5b.quizz.utilities.JsonParser;
 import trinity.cs3d5b.quizz.utilities.LeaderBoardAdapter;
 
@@ -15,16 +21,20 @@ public class LeaderBoard extends AppCompatActivity {
         EditText login;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard);
-        //((GridView) findViewById(R.id.grid)).setAdapter(LeaderBoardAdapter);
-        /*
+
 
         JsonParser jsonParser = new JsonParser(this.getApplicationContext());
-        String leaderBoard = "";
+        List<JSONObject> leaderBoard = new ArrayList<>();
         try{
-            leaderBoard = jsonParser.getLeaderBoard().getString(0);
+            JSONArray array = jsonParser.getLeaderBoard();
+            for(int x=0;x<array.length();x++){
+                leaderBoard.add(array.getJSONObject(x));
+            }
         } catch (Exception e){}
-        TextView text = findViewById(R.id.test);
-        text.setText(leaderBoard);*/
+
+        LeaderBoardAdapter leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(),leaderBoard);
+
+        ((GridView) findViewById(R.id.grid)).setAdapter(leaderBoardAdapter);
 
     }
 }

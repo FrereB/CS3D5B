@@ -1,6 +1,6 @@
 {
 	"leaderboard": [
-		{ "name": "Baptiste", "score": "100"},
-		{ "name": "Margaux", "score": "100"}
+		{ "name": "Baptiste", "score": "100", "picture": "avatar1"},
+		{ "name": "Margaux", "score": "100", "picture": "avatar2"}
 	]
 }

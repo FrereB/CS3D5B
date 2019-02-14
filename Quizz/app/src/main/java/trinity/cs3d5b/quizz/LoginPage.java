@@ -36,6 +36,12 @@ public class LoginPage extends AppCompatActivity  {
         startActivity(intent);
     }
 
+    protected void goToLeaderboard(View view) {
+
+        Intent intent = new Intent(this, LeaderBoard.class);
+        startActivity(intent);
+    }
+
 /// receive result/////////////////////////////////////////////////////////
 
     @Override
