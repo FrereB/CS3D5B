@@ -27,7 +27,6 @@ public class LoginPage extends AppCompatActivity  {
 
 
 
-
         Intent intent = new Intent(this, MainActivity.class);
         EditText editText = findViewById(R.id.name);
 
@@ -38,7 +37,6 @@ public class LoginPage extends AppCompatActivity  {
 
             String name = editText.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
-
             ImageView tvpic = findViewById(R.id.picturechoose);
 
             if (tvpic.getTag() != null) {
