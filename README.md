@@ -14,4 +14,4 @@ Responsibilities for the project were as follows:
 
     Margaux - worked on the Login page and Profile Picture selection feature
 
-Our video presentation can be found here: https://youtu.be/KnSAa4mc_fk
+Our video presentation can be found here: https://youtu.be/oGw4fhzg5DQ
