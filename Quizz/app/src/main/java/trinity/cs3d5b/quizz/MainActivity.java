@@ -41,35 +41,39 @@ public class MainActivity extends AppCompatActivity {
         String image = intent.getStringExtra(LoginPage.EXTRA_PICTURE);
 
         ImageView ImageView1 = (ImageView) findViewById(R.id.pictureprofile);
-        if(image.equals("avatar1")) {
-            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+        if(image!=null) {
+            if (image.equals("avatar1")) {
+                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+
+            }
+
+            if (image.equals("avatar2")) {
+                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+            }
+
+            if (image.equals("avatar3")) {
+                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
+            }
+
+            if (image.equals("avatar4")) {
+                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
+            }
+
+            if (image.equals("avatar5")) {
+                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
+            }
+
+            if (image.equals("avatar6")) {
+                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
+            }
+
+
+
 
         }
-
-        if(image.equals("avatar2")) {
-            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-        }
-
-        if(image.equals("avatar3")) {
-            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-        }
-
-        if(image.equals("avatar4")) {
-            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-        }
-
-        if(image.equals("avatar5")) {
-            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
-        }
-
-        if(image.equals("avatar6")) {
-            ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-        }
-
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.pseudo);
         textView.setText(name);
-
 
         mScoreView = findViewById(R.id.score);
         mQuestionView = findViewById(R.id.question);

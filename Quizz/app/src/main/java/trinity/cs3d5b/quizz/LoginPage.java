@@ -25,13 +25,21 @@ public class LoginPage extends AppCompatActivity  {
 
     protected void goToMainActivity(View view) {
 
+
+
+
         Intent intent = new Intent(this, MainActivity.class);
         EditText editText = findViewById(R.id.name);
-        String name = editText.getText().toString();
-        intent.putExtra(EXTRA_NAME, name);
+        if(editText.getText()!=null) {
+            String name = editText.getText().toString();
+            intent.putExtra(EXTRA_NAME, name);
+        }
         ImageView tvpic = findViewById(R.id.picturechoose);
-        String picture = tvpic.getTag().toString();
-        intent.putExtra(EXTRA_PICTURE, picture);
+
+       if(tvpic.getTag()!=null) {
+            String picture = tvpic.getTag().toString();
+            intent.putExtra(EXTRA_PICTURE, picture);
+        }
 
         startActivity(intent);
     }
@@ -88,6 +96,8 @@ public class LoginPage extends AppCompatActivity  {
                 }
             }
         }
+
+
     }
 
 
