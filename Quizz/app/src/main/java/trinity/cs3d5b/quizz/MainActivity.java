@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.pseudo);
-
         textView.setText(name);
 
         mScoreView = findViewById(R.id.score);
@@ -84,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
         mButtonChoice3 = findViewById(R.id.choice3);
         mButtonChoice4 = findViewById(R.id.choice4);
         mQuitButton = findViewById(R.id.quit);
-
         updateQuestion();
 
         //Start of Button Listener for Button1
