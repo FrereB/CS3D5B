@@ -42,5 +42,11 @@ public class EndScreenActivity extends AppCompatActivity {
         });
     }
 
+    protected void goToLeaderboard(View view) {
+
+        Intent intent = new Intent(this, LeaderBoard.class);
+        startActivity(intent);
+    }
+
 
 }

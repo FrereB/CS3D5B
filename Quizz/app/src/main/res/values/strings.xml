@@ -20,5 +20,6 @@
     <string name="new_quiz">New Quiz</string>
     <string name="score">Score</string>
     <string name="game_over">Game Over! You got a score of</string>
-    <string name="reset_quiz">Reset Quiz</string>
+    <string name="return_home">Return Home</string>
+    <string name="leaderboard">Leaderboard</string>
 </resources>
