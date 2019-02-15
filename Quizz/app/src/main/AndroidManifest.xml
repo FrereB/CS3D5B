@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="trinity.cs3d5b.quizz">
-
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -24,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".LeaderBoard" />
-        <activity android:name=".EndScreenActivity"></activity>
+        <activity android:name=".EndScreenActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -66,8 +66,10 @@ public class LoginPage extends AppCompatActivity  {
 
             if (resultCode == RESULT_OK) {
                 String picture = extras.getString("picture");
-               ImageView ImageView1 = (ImageView) findViewById(R.id.picturechoose);
-               if(picture.equals("avatar1")) {
+              ImageView ImageView1 = (ImageView) findViewById(R.id.picturechoose);
+
+
+              if(picture.equals("avatar1")) {
                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
                    ImageView1.setTag("avatar1");
 
@@ -106,7 +108,7 @@ public class LoginPage extends AppCompatActivity  {
 
 
 
-
+//Action to go to selection of the picture
     protected void goToPicture(View view) {
         Intent intent = new Intent(this,ProfilePicture.class);
         startActivityForResult(intent,PICK_PICTURE_REQUEST);

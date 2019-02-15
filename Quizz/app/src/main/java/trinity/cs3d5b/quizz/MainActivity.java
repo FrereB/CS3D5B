@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import trinity.cs3d5b.quizz.utilities.JsonParser;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
@@ -26,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private Button mQuitButton;
 
     private String mAnswer;
+    private String name = "";
+    private String image = "";
     private int mScore = 0;
     private int mQuestionNumber = 0;
     private boolean gameOver = false;
@@ -39,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        String name = intent.getStringExtra(LoginPage.EXTRA_NAME);
-        String image = intent.getStringExtra(LoginPage.EXTRA_PICTURE);
+        name = intent.getStringExtra(LoginPage.EXTRA_NAME);
+        image = intent.getStringExtra(LoginPage.EXTRA_PICTURE);
 
         ImageView ImageView1 = (ImageView) findViewById(R.id.pictureprofile);
         if(image!=null) {
@@ -76,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.pseudo);
-
         textView.setText(name);
 
         mScoreView = findViewById(R.id.score);
@@ -86,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         mButtonChoice3 = findViewById(R.id.choice3);
         mButtonChoice4 = findViewById(R.id.choice4);
         mQuitButton = findViewById(R.id.quit);
-
         updateQuestion();
 
         //Start of Button Listener for Button1
@@ -165,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
+                (new JsonParser(getApplicationContext())).addToLeaderBoard(name,message,image);
                 //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
                 String numOfQsMessage = Integer.toString(4);
 
@@ -195,6 +198,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
             String scoreMessage = Integer.toString(mScore);
+            (new JsonParser(getApplicationContext())).addToLeaderBoard(name,scoreMessage,image);
             //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
 
             intent.putExtra(EXTRA_MESSAGE, scoreMessage);
