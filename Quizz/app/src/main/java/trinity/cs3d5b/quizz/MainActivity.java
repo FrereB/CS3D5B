@@ -13,7 +13,9 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
+    private String Qlib = "General Knowledge";
+
+    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
 
     private TextView mScoreView;
     private TextView mQuestionView;
@@ -200,10 +202,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     private void updateScore() {
         mScoreView.setText("" + mScore);
     }
-
 
 }
