@@ -71,8 +71,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
+
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.pseudo);
+
         textView.setText(name);
 
         mScoreView = findViewById(R.id.score);

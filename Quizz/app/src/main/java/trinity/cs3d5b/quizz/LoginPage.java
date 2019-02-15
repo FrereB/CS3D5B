@@ -30,18 +30,24 @@ public class LoginPage extends AppCompatActivity  {
 
         Intent intent = new Intent(this, MainActivity.class);
         EditText editText = findViewById(R.id.name);
-        if(editText.getText()!=null) {
+
+        if (editText.getText().toString().trim().equals("")) {
+            editText.setError("Required!");
+        }
+        else {
+
             String name = editText.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
-        }
-        ImageView tvpic = findViewById(R.id.picturechoose);
 
-       if(tvpic.getTag()!=null) {
-            String picture = tvpic.getTag().toString();
-            intent.putExtra(EXTRA_PICTURE, picture);
-        }
+            ImageView tvpic = findViewById(R.id.picturechoose);
 
-        startActivity(intent);
+            if (tvpic.getTag() != null) {
+                String picture = tvpic.getTag().toString();
+                intent.putExtra(EXTRA_PICTURE, picture);
+            }
+
+            startActivity(intent);
+        }
     }
 
     protected void goToLeaderboard(View view) {
