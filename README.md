@@ -11,5 +11,7 @@ Responsibilities for the project were as follows:
     Brendan - created the question library (had trouble pushing so Baptiste pushed for him)
 
     David - worked on the overall design of the project and bug-bashing
-    
+
     Margaux - worked on the Login page and Profile Picture selection feature
+
+Our video presentation can be found here: https://youtu.be/KnSAa4mc_fk
