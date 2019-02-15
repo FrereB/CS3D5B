@@ -9,6 +9,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import trinity.cs3d5b.quizz.utilities.JsonParser;
@@ -32,9 +34,29 @@ public class LeaderBoard extends AppCompatActivity {
             }
         } catch (Exception e){}
 
+        //List<JSONObject> sortedLeaderBoard = insertionSort(leaderBoard);
+
         LeaderBoardAdapter leaderBoardAdapter = new LeaderBoardAdapter(getApplicationContext(),leaderBoard);
 
         ((GridView) findViewById(R.id.grid)).setAdapter(leaderBoardAdapter);
 
+    }
+
+    private List<JSONObject> insertionSort(List<JSONObject> input){
+        try {
+            JSONObject temp;
+            JSONObject temp2;
+            for (int i = 1; i < input.size(); i++) {
+                for(int j = i ; j > 0 ; j--){
+                    if(input.get(j).getInt("score") < input.get(j-1).getInt("score")){
+                        temp = input.get(j);
+                        temp2 = input.get(j-1);
+                        input.add(j,temp2);
+                        input.add(j-1,temp);
+                    }
+                }
+            }
+        } catch (Exception e){}
+        return input;
     }
 }
