@@ -19,7 +19,7 @@ public class EndScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
-
+//
         resetButton = findViewById(R.id.reset_button);
 
         // Get the Intent that started this activity and extract the string
