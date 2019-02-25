@@ -12,9 +12,9 @@ public class QuestionLibrary {
     private String correctAnswers[]= {"","","","","","","","","",""};
 
 
-    public QuestionLibrary(String Qlibrary){
+    public void setQuestionLibrary(String Qlibrary){
 
-        if(Qlibrary == "General Knowledge"){
+        if(Qlibrary.equals("General Knowledge")){
 
             questions[0] = "What is the scientific name of lie detector which is sometimes used by the police for detecting lies?";
             questions[1] = "What was Margaret Thatcher's middle name?";

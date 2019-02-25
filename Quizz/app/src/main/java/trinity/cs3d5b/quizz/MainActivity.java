@@ -15,9 +15,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    private String Qlib = "General Knowledge";
+    //private String Qlib = "General Knowledge";
+    private String Qlib = "";
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
+    private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
 
     private TextView mScoreView;
     private TextView mQuestionView;
@@ -41,10 +42,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        // Get the Intent that started this activity and extract the string
+        // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
         name = intent.getStringExtra(LoginPage.EXTRA_NAME);
         image = intent.getStringExtra(LoginPage.EXTRA_PICTURE);
+        Qlib = intent.getStringExtra(LoginPage.EXTRA_CATEGORY);
+
+        //mQuestionLibrary.setQuestionLibrary("General Knowledge");
+        mQuestionLibrary.setQuestionLibrary(Qlib);
 
         ImageView ImageView1 = (ImageView) findViewById(R.id.pictureprofile);
         if(image!=null) {

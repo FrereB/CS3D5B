@@ -13,18 +13,22 @@ public class LoginPage extends AppCompatActivity  {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
-    private final int PICK_PICTURE_REQUEST =1; //The request code
+    public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
+    private final int PICK_PICTURE_REQUEST = 1; //The request code
+    private final int CATEGORY_REQUEST = 3;   //Other request code
+
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
+        category = "";
     }
 
 
     protected void goToMainActivity(View view) {
-
 
 
         Intent intent = new Intent(this, MainActivity.class);
@@ -43,6 +47,9 @@ public class LoginPage extends AppCompatActivity  {
                 String picture = tvpic.getTag().toString();
                 intent.putExtra(EXTRA_PICTURE, picture);
             }
+
+            goToCategory();
+            intent.putExtra(EXTRA_CATEGORY, category);
 
             startActivity(intent);
         }
@@ -102,8 +109,12 @@ public class LoginPage extends AppCompatActivity  {
                 }
             }
         }
-
-
+        
+        else if (requestCode == CATEGORY_REQUEST){
+            if(resultCode == RESULT_OK){
+                category = extras.getString("category");
+            }
+        }
     }
 
 
@@ -114,9 +125,15 @@ public class LoginPage extends AppCompatActivity  {
         startActivityForResult(intent,PICK_PICTURE_REQUEST);
     }
 
+    protected void goToCategory(){
 
+        Intent intent = new Intent(this, CategoryActivity.class);
+        startActivityForResult(intent,CATEGORY_REQUEST);
 
+        return;
+    }
 }
+
 
 
 
