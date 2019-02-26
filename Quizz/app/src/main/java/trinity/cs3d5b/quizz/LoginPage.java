@@ -1,19 +1,34 @@
 package trinity.cs3d5b.quizz;
 
 
+
+import android.os.Bundle;
+import android.content.*;
+import android.widget.*;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.*;
-import android.content.*;
-import android.widget.*;
-
+import android.graphics.*;
+import android.net.*;
+import android.database.Cursor;
+import android.support.v4.app.*;
+import android.support.v7.app.*;
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.support.annotation.*;
+import android.support.v4.content.*;
 
 
 public class LoginPage extends AppCompatActivity  {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
-    private final int PICK_PICTURE_REQUEST =1; //The request code
+    private static final int PICK_PICTURE_REQUEST =1; //The request code for avatar picture
+    public static final int IMAGE_GALLERY_REQUEST = 12;
+    public static final int STORAGE_PERMISSION_CODE = 13;
+    private ImageView pictureProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +39,6 @@ public class LoginPage extends AppCompatActivity  {
 
 
     protected void goToMainActivity(View view) {
-
-
 
         Intent intent = new Intent(this, MainActivity.class);
         EditText editText = findViewById(R.id.name);
@@ -102,6 +115,10 @@ public class LoginPage extends AppCompatActivity  {
                 }
             }
         }
+
+
+
+
 
 
     }
