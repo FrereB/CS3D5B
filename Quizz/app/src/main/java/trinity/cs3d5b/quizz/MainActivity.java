@@ -216,6 +216,7 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE, scoreMessage);
             startActivity(intent);
         }
+        timer.start();
     }
 
     private void updateScore() {
@@ -253,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
             remainMilli=0;
             Toast.makeText(MainActivity.this, "Out of Time!", Toast.LENGTH_SHORT).show();
             updateQuestion();
-            timer.start();
         }
     }
 }
