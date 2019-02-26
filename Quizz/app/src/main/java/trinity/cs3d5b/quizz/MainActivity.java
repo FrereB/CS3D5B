@@ -1,6 +1,7 @@
 package trinity.cs3d5b.quizz;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.concurrent.TimeUnit;
 
 import trinity.cs3d5b.quizz.utilities.JsonParser;
 
@@ -33,6 +36,12 @@ public class MainActivity extends AppCompatActivity {
     private int mScore = 0;
     private int mQuestionNumber = 0;
     private boolean gameOver = false;
+
+    //timer code
+    private TextView timerTextView;
+    private CounterClass timer;
+    long remainMilli = 0;
+    boolean isRunning = false;
 
 
     @Override
@@ -82,6 +91,9 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.pseudo);
         textView.setText(name);
 
+        timerTextView = findViewById(R.id.timerTextView);
+        timer = new CounterClass(15000,1);
+        timer.start();
         mScoreView = findViewById(R.id.score);
         mQuestionView = findViewById(R.id.question);
         mButtonChoice1 = findViewById(R.id.choice1);
@@ -210,4 +222,38 @@ public class MainActivity extends AppCompatActivity {
         mScoreView.setText("" + mScore);
     }
 
+    public class CounterClass extends CountDownTimer {
+        //All three methods (constructor) need to be overridden to use this class
+
+        //Default Constructor
+        public CounterClass(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+
+        }
+
+        //When timer is ticking, what should happen at that duration; will go in this method
+        @Override
+        public void onTick(long millisUntilFinished) {
+            remainMilli = millisUntilFinished;
+
+            //Format to display the timer
+            String hms = String.format("%02d . %03d",
+                    TimeUnit.MILLISECONDS.toSeconds(remainMilli)- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainMilli)),
+                    TimeUnit.MILLISECONDS.toMillis(remainMilli) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(remainMilli)));
+
+            timerTextView.setText(hms);
+
+        }
+
+        //When time is finished, what should happen: will go in this method
+        @Override
+        public void onFinish() {
+            // reset all variables
+            isRunning=false;
+            remainMilli=0;
+            Toast.makeText(MainActivity.this, "Out of Time!", Toast.LENGTH_SHORT).show();
+            updateQuestion();
+            timer.start();
+        }
+    }
 }
