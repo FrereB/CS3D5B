@@ -21,5 +21,7 @@
     <string name="score">Score</string>
     <string name="game_over">Game Over! You got a score of</string>
     <string name="return_home">Return Home</string>
+
+    <string name="share_score">Share your score</string>
     <string name="leaderboard">Leaderboard</string>
 </resources>
