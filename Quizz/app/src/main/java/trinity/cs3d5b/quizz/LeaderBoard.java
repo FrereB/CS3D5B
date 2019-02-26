@@ -24,7 +24,7 @@ public class LeaderBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.leaderboard);
 
-
+//Test
         JsonParser jsonParser = new JsonParser(this.getApplicationContext());
         List<JSONObject> leaderBoard = new ArrayList<>();
         try{
