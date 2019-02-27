@@ -30,6 +30,7 @@ public class ProfilePicture extends AppCompatActivity {
     public static final int STORAGE_PERMISSION_CODE = 13;
     public static final int AVATAR_REQUEST = 1;
     public static String picture;
+    public static Uri selectedImage;
     public static String picturePath;
    public  Intent mIntent = new Intent();
    public Bundle stats = new Bundle();
@@ -135,7 +136,7 @@ public class ProfilePicture extends AppCompatActivity {
             if (requestCode == IMAGE_GALLERY_REQUEST ) { // Display the picture from the gallery of the user that he chose
 
                 //Acces to the image from data
-                Uri selectedImage = data.getData();
+                selectedImage = data.getData();
 
                 //All the path of the picture from the user phone
                 String[] filePathCol = {MediaStore.Images.Media.DATA};
@@ -153,57 +154,28 @@ public class ProfilePicture extends AppCompatActivity {
                 Bitmap image = BitmapFactory.decodeFile(imgPath);
 
 
-                //A CHANGER
+
 
                 stats.putInt("type", 2);
                 mIntent.putExtras(stats);
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
 
-
-                mIntent.putExtra("image",byteArray);
-
-
+                mIntent.putExtra("imageUri",selectedImage);
                 //Display of the picture
                 pictureProfile.setImageBitmap(image);
+                setResult(RESULT_OK, mIntent);
 
 
             }
 
             else if (requestCode == AVATAR_REQUEST) {
                  picture = data.getExtras().getString("picture");
+                int id = getResources().getIdentifier(picture, "drawable", getPackageName());
+                pictureProfile.setImageResource(id);
+                stats.putString("picture", picture);
+                stats.putInt("type", 1);
+                mIntent.putExtras(stats);
+                setResult(RESULT_OK, mIntent);
 
-                if(picture.equals("avatar1")) {
-                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar1));
-                }
-
-                if(picture.equals("avatar2")) {
-                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar2));
-
-                }
-
-                if(picture.equals("avatar3")) {
-                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar3));
-
-                }
-
-                if(picture.equals("avatar4")) {
-                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar4));
-
-                }
-
-                if(picture.equals("avatar5")) {
-                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar5));
-
-
-                }
-
-                if(picture.equals("avatar6")) {
-                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar6));
-
-
-                }
             }
 
         }
@@ -231,19 +203,12 @@ public class ProfilePicture extends AppCompatActivity {
     protected void goToLoginPage(View view) {
 
 
-
-        if(picture!=null) {
-            Bundle stats = new Bundle();
-            stats.putString("picture", picture);
-            stats.putInt("type", 1);
-            mIntent.putExtras(stats);
-
+        if (selectedImage==null && picture ==null) {
+            Toast.makeText(this, "You need to choose a profile picture", Toast.LENGTH_LONG).show();
         }
-
-
-
-        setResult(RESULT_OK, mIntent);
-        finish();
+        else {
+            finish();
+        }
 
     }
 }

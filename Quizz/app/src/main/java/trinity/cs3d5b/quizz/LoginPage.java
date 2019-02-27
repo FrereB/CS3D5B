@@ -19,7 +19,8 @@ public class LoginPage extends AppCompatActivity  {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
-    public static final int IMAGE_GALLERY_REQUEST = 2;
+    public static String picture;
+    public static Uri uri;
     public static final int AVATAR_REQUEST = 1;//The request code for avatar picture;
 
 
@@ -40,6 +41,11 @@ public class LoginPage extends AppCompatActivity  {
         if (userName.getText().toString().trim().equals("")) {
             userName.setError("Required!");
         }
+
+        else if(uri==null && picture==null){
+            Toast.makeText(this, "You need to choose a profile picture", Toast.LENGTH_LONG).show();
+        }
+
         else {
 
             String name = userName.getText().toString();
@@ -47,8 +53,8 @@ public class LoginPage extends AppCompatActivity  {
             ImageView tvpic = findViewById(R.id.picturechoose);
 
             if (tvpic.getTag() != null) {
-                String picture = tvpic.getTag().toString();
-                intent.putExtra(EXTRA_PICTURE, picture);
+                String picturepi = tvpic.getTag().toString();
+                intent.putExtra(EXTRA_PICTURE, picturepi);
             }
 
             startActivity(intent);
@@ -74,61 +80,45 @@ public class LoginPage extends AppCompatActivity  {
 
            if (resultCode == RESULT_OK) {
 
-               String picture = extras.getString("picture");
+                picture = extras.getString("picture");
                int type = extras.getInt("type");
 
 
                     if(type == 1){
+                        int id = getResources().getIdentifier(picture, "drawable", getPackageName());
+                        ImageView1.setImageResource(id);
+                        ImageView1.setTag(picture);
+                    } else if (type==2) {
 
-                   if (picture.equals("avatar1")) {
-                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+                         uri = intent.getParcelableExtra("imageUri");
 
+                        //All the path of the picture from the user phone
+                        String[] filePathCol = {MediaStore.Images.Media.DATA};
 
-                   }
+                        //Cursor to access to the path of the picture
+                        Cursor cursor = this.getContentResolver().query(uri,filePathCol,null, null,null);
+                        cursor.moveToFirst();
 
-                   if (picture.equals("avatar2")) {
-                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar2));
+                        //We recover the path of the picture
 
-                   }
-
-                   if (picture.equals("avatar3")) {
-                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-
-                   }
-
-                   if (picture.equals("avatar4")) {
-                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-
-                   }
-
-                   if (picture.equals("avatar5")) {
-                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
+                        int columIndex = cursor.getColumnIndex(filePathCol[0]);
+                        String imgPath = cursor.getString(columIndex);
+                        cursor.close();
+                        //Récupération Image
+                        Bitmap image = BitmapFactory.decodeFile(imgPath);
 
 
-                   }
+                        //byte[] byteArray = intent.getByteArrayExtra("image");
+                        //Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
 
-                   if (picture.equals("avatar6")) {
-                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-
-                   }
-
-
-               } else if (type==2) {
-
-
-                        byte[] byteArray = intent.getByteArrayExtra("image");
-                        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-                   ImageView1.setImageBitmap(bmp);
+                   ImageView1.setImageBitmap(image);
                }
            }
 
 
 
 
-                int id = getResources().getIdentifier(picture, "drawable", getPackageName());
-                ImageView1.setImageResource(id);
-                ImageView1.setTag(picture);
+
             }
         }
 
@@ -137,7 +127,7 @@ public class LoginPage extends AppCompatActivity  {
 
 
 
-    }
+
 
 
 
