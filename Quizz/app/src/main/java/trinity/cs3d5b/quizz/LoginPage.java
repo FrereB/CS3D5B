@@ -126,6 +126,10 @@ public class LoginPage extends AppCompatActivity  {
 
 
 
+                int id = getResources().getIdentifier(picture, "drawable", getPackageName());
+                ImageView1.setImageResource(id);
+                ImageView1.setTag(picture);
+            }
         }
 
 

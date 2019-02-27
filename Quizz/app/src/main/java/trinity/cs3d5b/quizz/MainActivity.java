@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mButtonChoice3;
     private Button mButtonChoice4;
     private Button mQuitButton;
+    private Question currentQuestion;
 
     private String mAnswer;
     private String name = "";
@@ -192,13 +193,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateQuestion() {
 
         if (!gameOver) {
-            mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
-            mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber));
-            mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber));
-            mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber));
-            mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber));
+            currentQuestion = mQuestionLibrary.getQuestion(mQuestionNumber);
 
-            mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber);
+            mQuestionView.setText(currentQuestion.getQuestion());
+            mButtonChoice1.setText(currentQuestion.getAnswers().get(0));
+            mButtonChoice2.setText(currentQuestion.getAnswers().get(1));
+            mButtonChoice3.setText(currentQuestion.getAnswers().get(2));
+            mButtonChoice4.setText(currentQuestion.getAnswers().get(3));
+
+            mAnswer = currentQuestion.getCorrectAnswer();
 
             mQuestionNumber++;
 
