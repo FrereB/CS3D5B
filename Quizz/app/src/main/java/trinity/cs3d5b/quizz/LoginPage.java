@@ -81,8 +81,11 @@ public class LoginPage extends AppCompatActivity  {
                 String picture = extras.getString("picture");
               ImageView ImageView1 = (ImageView) findViewById(R.id.picturechoose);
 
+                int id = getResources().getIdentifier(picture, "drawable", getPackageName());
+                ImageView1.setImageResource(id);
+                ImageView1.setTag(picture);
 
-              if(picture.equals("avatar1")) {
+              /*if(picture.equals("avatar1")) {
                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
                    ImageView1.setTag("avatar1");
 
@@ -112,7 +115,7 @@ public class LoginPage extends AppCompatActivity  {
                 if(picture.equals("avatar6")) {
                     ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
                     ImageView1.setTag("avatar6");
-                }
+                }*/
             }
         }
 
