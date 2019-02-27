@@ -84,38 +84,6 @@ public class LoginPage extends AppCompatActivity  {
                 int id = getResources().getIdentifier(picture, "drawable", getPackageName());
                 ImageView1.setImageResource(id);
                 ImageView1.setTag(picture);
-
-              /*if(picture.equals("avatar1")) {
-                   ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-                   ImageView1.setTag("avatar1");
-
-               }
-
-                if(picture.equals("avatar2")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar2));
-                    ImageView1.setTag("avatar2");
-                }
-
-                if(picture.equals("avatar3")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-                    ImageView1.setTag("avatar3");
-                }
-
-                if(picture.equals("avatar4")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-                    ImageView1.setTag("avatar4");
-                }
-
-                if(picture.equals("avatar5")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
-                    ImageView1.setTag("avatar5");
-
-                }
-
-                if(picture.equals("avatar6")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-                    ImageView1.setTag("avatar6");
-                }*/
             }
         }
 
