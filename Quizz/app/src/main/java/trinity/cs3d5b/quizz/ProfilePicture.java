@@ -22,12 +22,19 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.io.*;
 
 public class ProfilePicture extends AppCompatActivity {
 
-    public static final int IMAGE_GALLERY_REQUEST = 12;
+    public static final int IMAGE_GALLERY_REQUEST = 2;
     public static final int STORAGE_PERMISSION_CODE = 13;
-    public static final int AVATAR_REQUEST = 14;
+    public static final int AVATAR_REQUEST = 1;
+    public static String picture;
+    public static String picturePath;
+   public  Intent mIntent = new Intent();
+   public Bundle stats = new Bundle();
+
+
     private ImageView pictureProfile;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +102,7 @@ public class ProfilePicture extends AppCompatActivity {
         Intent photoPicker = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI); //We define that we want to pick something
 
         //We define where to find the data
-        String picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath();
+         picturePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath();
 
 
         //We get an URI
@@ -123,7 +130,6 @@ public class ProfilePicture extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK) { // Check if the user chose OK
 
             if (requestCode == IMAGE_GALLERY_REQUEST ) { // Display the picture from the gallery of the user that he chose
@@ -146,54 +152,59 @@ public class ProfilePicture extends AppCompatActivity {
                 //Récupération Image
                 Bitmap image = BitmapFactory.decodeFile(imgPath);
 
+
+                //A CHANGER
+
+                stats.putInt("type", 2);
+                mIntent.putExtras(stats);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                image.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+
+
+                mIntent.putExtra("image",byteArray);
+
+
                 //Display of the picture
                 pictureProfile.setImageBitmap(image);
-
-
 
 
             }
 
             else if (requestCode == AVATAR_REQUEST) {
-                String picture = data.getExtras().getString("picture");
-                ImageView ImageView1 = (ImageView) findViewById(R.id.galleryPic);
-
+                 picture = data.getExtras().getString("picture");
 
                 if(picture.equals("avatar1")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-                    ImageView1.setTag("avatar1");
-
+                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar1));
                 }
 
                 if(picture.equals("avatar2")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar2));
-                    ImageView1.setTag("avatar2");
+                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar2));
+
                 }
 
                 if(picture.equals("avatar3")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-                    ImageView1.setTag("avatar3");
+                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar3));
+
                 }
 
                 if(picture.equals("avatar4")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-                    ImageView1.setTag("avatar4");
+                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar4));
+
                 }
 
                 if(picture.equals("avatar5")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
-                    ImageView1.setTag("avatar5");
+                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar5));
+
 
                 }
 
                 if(picture.equals("avatar6")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-                    ImageView1.setTag("avatar6");
+                    pictureProfile.setImageDrawable(getDrawable(R.drawable.avatar6));
+
+
                 }
             }
-        }
-
-
 
         }
 
@@ -202,6 +213,13 @@ public class ProfilePicture extends AppCompatActivity {
 
 
 
+        }
+
+
+
+
+
+//Action to choose an avatar
 
     protected void goToAvatar(View view) {
 
@@ -209,10 +227,23 @@ public class ProfilePicture extends AppCompatActivity {
         startActivityForResult(intent, AVATAR_REQUEST);
     }
 
-
+//Action to go back to the LoginPage
     protected void goToLoginPage(View view) {
 
-        Intent intent = new Intent(this,LoginPage.class);
-        startActivity(intent);
+
+
+        if(picture!=null) {
+            Bundle stats = new Bundle();
+            stats.putString("picture", picture);
+            stats.putInt("type", 1);
+            mIntent.putExtras(stats);
+
+        }
+
+
+
+        setResult(RESULT_OK, mIntent);
+        finish();
+
     }
 }

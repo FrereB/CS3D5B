@@ -2,38 +2,32 @@ package trinity.cs3d5b.quizz;
 
 
 
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.content.*;
-import android.widget.*;
-import android.os.Environment;
 import android.provider.MediaStore;
+import android.widget.*;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.*;
-import android.graphics.*;
-import android.net.*;
-import android.database.Cursor;
-import android.support.v4.app.*;
-import android.support.v7.app.*;
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.support.annotation.*;
-import android.support.v4.content.*;
+
 
 
 public class LoginPage extends AppCompatActivity  {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
-    private static final int PICK_PICTURE_REQUEST =1; //The request code for avatar picture
-    public static final int IMAGE_GALLERY_REQUEST = 12;
-    public static final int STORAGE_PERMISSION_CODE = 13;
-    private ImageView pictureProfile;
+    public static final int IMAGE_GALLERY_REQUEST = 2;
+    public static final int AVATAR_REQUEST = 1;//The request code for avatar picture;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
 
     }
 
@@ -41,14 +35,14 @@ public class LoginPage extends AppCompatActivity  {
     protected void goToMainActivity(View view) {
 
         Intent intent = new Intent(this, MainActivity.class);
-        EditText editText = findViewById(R.id.name);
+        EditText userName = findViewById(R.id.name);
 
-        if (editText.getText().toString().trim().equals("")) {
-            editText.setError("Required!");
+        if (userName.getText().toString().trim().equals("")) {
+            userName.setError("Required!");
         }
         else {
 
-            String name = editText.getText().toString();
+            String name = userName.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
             ImageView tvpic = findViewById(R.id.picturechoose);
 
@@ -73,47 +67,65 @@ public class LoginPage extends AppCompatActivity  {
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
         super.onActivityResult(requestCode, resultCode, intent);
-        Bundle extras = intent.getExtras();
+       Bundle extras = intent.getExtras();
+        ImageView ImageView1 = (ImageView) findViewById(R.id.picturechoose);
 
-        if (requestCode == PICK_PICTURE_REQUEST) {
+        if (requestCode == AVATAR_REQUEST) {
 
-            if (resultCode == RESULT_OK) {
-                String picture = extras.getString("picture");
-              ImageView ImageView1 = (ImageView) findViewById(R.id.picturechoose);
+           if (resultCode == RESULT_OK) {
+
+               String picture = extras.getString("picture");
+               int type = extras.getInt("type");
 
 
-              if(picture.equals("avatar1")) {
-                   ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-                   ImageView1.setTag("avatar1");
+                    if(type == 1){
 
+                   if (picture.equals("avatar1")) {
+                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
+
+
+                   }
+
+                   if (picture.equals("avatar2")) {
+                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar2));
+
+                   }
+
+                   if (picture.equals("avatar3")) {
+                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
+
+                   }
+
+                   if (picture.equals("avatar4")) {
+                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
+
+                   }
+
+                   if (picture.equals("avatar5")) {
+                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
+
+
+                   }
+
+                   if (picture.equals("avatar6")) {
+                       ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
+
+                   }
+
+
+               } else if (type==2) {
+
+
+                        byte[] byteArray = intent.getByteArrayExtra("image");
+                        Bitmap bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+                   ImageView1.setImageBitmap(bmp);
                }
+           }
 
-                if(picture.equals("avatar2")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar2));
-                    ImageView1.setTag("avatar2");
-                }
 
-                if(picture.equals("avatar3")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-                    ImageView1.setTag("avatar3");
-                }
 
-                if(picture.equals("avatar4")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-                    ImageView1.setTag("avatar4");
-                }
 
-                if(picture.equals("avatar5")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
-                    ImageView1.setTag("avatar5");
-
-                }
-
-                if(picture.equals("avatar6")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-                    ImageView1.setTag("avatar6");
-                }
-            }
         }
 
 
@@ -128,7 +140,7 @@ public class LoginPage extends AppCompatActivity  {
 //Action to go to selection of the picture
     protected void goToPicture(View view) {
         Intent intent = new Intent(this,ProfilePicture.class);
-        startActivityForResult(intent,PICK_PICTURE_REQUEST);
+        startActivityForResult(intent,AVATAR_REQUEST);
     }
 
 
