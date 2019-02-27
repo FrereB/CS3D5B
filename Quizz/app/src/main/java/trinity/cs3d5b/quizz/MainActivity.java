@@ -1,7 +1,11 @@
 package trinity.cs3d5b.quizz;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.CountDownTimer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +13,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.net.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -21,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private String Qlib = "General Knowledge";
 
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
+
+    public static String picture;
 
     private TextView mScoreView;
     private TextView mQuestionView;
@@ -54,36 +61,41 @@ public class MainActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
         name = intent.getStringExtra(LoginPage.EXTRA_NAME);
-        image = intent.getStringExtra(LoginPage.EXTRA_PICTURE);
-
-        ImageView ImageView1 = (ImageView) findViewById(R.id.pictureprofile);
-        if(image!=null) {
-            if (image.equals("avatar1")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-
-            }
-
-            if (image.equals("avatar2")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-            }
-
-            if (image.equals("avatar3")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-            }
-
-            if (image.equals("avatar4")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-            }
-
-            if (image.equals("avatar5")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
-            }
-
-            if (image.equals("avatar6")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-            }
 
 
+        ImageView profilePicture = (ImageView) findViewById(R.id.pictureprofile);
+
+        Bundle extras = intent.getExtras();
+        picture = extras.getString("picture");
+        int type = extras.getInt("type");
+
+
+        if (type == 1) { // Photo from the gallery of the user
+            //We get the id and we display the picture
+            int id = getResources().getIdentifier(picture, "drawable", getPackageName());
+            profilePicture.setImageResource(id);
+            profilePicture.setTag(picture);
+        } else if (type == 2) { // Avatar already available
+            //We get the uri and we display the picture
+            Uri uriSelectedImage = intent.getParcelableExtra("imageUri");
+
+            //All the path of the picture from the user phone
+            String[] filePathCol = {MediaStore.Images.Media.DATA};
+
+            //Cursor to access to the path of the picture
+            Cursor cursor = this.getContentResolver().query(uriSelectedImage, filePathCol, null, null, null);
+            cursor.moveToFirst();
+
+            //We recover the path of the picture
+
+            int columIndex = cursor.getColumnIndex(filePathCol[0]);
+            String imgPath = cursor.getString(columIndex);
+            cursor.close();
+            //get the Image
+            Bitmap image = BitmapFactory.decodeFile(imgPath);
+            //Display the picture
+
+            profilePicture.setImageBitmap(image);
 
 
         }
