@@ -1,5 +1,9 @@
 package trinity.cs3d5b.quizz;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class QuestionLibrary {
 
     private String questions[] = {"","","","","","","","","",""};
@@ -14,7 +18,7 @@ public class QuestionLibrary {
 
     public QuestionLibrary(String Qlibrary){
 
-        if(Qlibrary == "General Knowledge"){
+        if(Qlibrary.equals("General Knowledge")){
 
             questions[0] = "What is the scientific name of lie detector which is sometimes used by the police for detecting lies?";
             questions[1] = "What was Margaret Thatcher's middle name?";
@@ -72,32 +76,14 @@ public class QuestionLibrary {
 
     private int numberOfQuestions = correctAnswers.length;
 
+    public Question getQuestion(int questionNb){
+        List<String> list = new ArrayList<>();
+        list.addAll(Arrays.asList(choices[questionNb]).subList(0, 4));
+        return new Question(questions[questionNb],correctAnswers[questionNb],list);
+    }
+
     public int getNumberOfQuestions(){
         return numberOfQuestions;
-    }
-
-    public String getQuestion(int a) {
-        return questions[a];
-    }
-
-    public String getChoice1(int a) {
-        return choices[a][0];
-    }
-
-    public String getChoice2(int a) {
-        return choices[a][1];
-    }
-
-    public String getChoice3(int a) {
-        return choices[a][2];
-    }
-
-    public String getChoice4(int a) {
-        return choices[a][3];
-    }
-
-    public String getCorrectAnswer(int a) {
-        return correctAnswers[a];
     }
 
 }
