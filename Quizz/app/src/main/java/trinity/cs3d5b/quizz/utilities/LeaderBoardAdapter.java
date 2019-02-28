@@ -8,29 +8,27 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.List;
 
 import trinity.cs3d5b.quizz.R;
+import trinity.cs3d5b.quizz.database.UserModel;
 
-public class LeaderBoardAdapter extends ArrayAdapter<JSONObject> {
+public class LeaderBoardAdapter extends ArrayAdapter<UserModel> {
 
-    List<JSONObject> json;
+    List<UserModel> items;
     Context context;
     private LayoutInflater mInflater;
 
-    public LeaderBoardAdapter(Context context, List<JSONObject> json){
+    public LeaderBoardAdapter(Context context, List<UserModel> json){
         super(context, 0, json);
         this.context = context;
         this.mInflater = LayoutInflater.from(context);
-        this.json = json;
+        this.items = json;
     }
 
     @Override
-    public JSONObject getItem(int position) {
-        return json.get(position);
+    public UserModel getItem(int position) {
+        return items.get(position);
     }
 
     @Override
@@ -40,11 +38,11 @@ public class LeaderBoardAdapter extends ArrayAdapter<JSONObject> {
             convertView = inflater.inflate(R.layout.leaderboard_line, null );
         }
 
-        JSONObject jsonObject =getItem(position);
+        UserModel userModel = getItem(position);
         try {
-            ((TextView) convertView.findViewById(R.id.name)).setText(jsonObject.getString("name"));
-            ((TextView) convertView.findViewById(R.id.score)).setText(jsonObject.getString("score"));
-            int id = context.getResources().getIdentifier(jsonObject.getString("picture"), "drawable", context.getPackageName());
+            ((TextView) convertView.findViewById(R.id.name)).setText(userModel.getName());
+            ((TextView) convertView.findViewById(R.id.score)).setText(Integer.toString(userModel.getHighScore()));
+            int id = context.getResources().getIdentifier(userModel.getProfilePicture(), "drawable", context.getPackageName());
             ((ImageView) convertView.findViewById(R.id.picture)).setImageResource(id);
         } catch (Exception e){}
 

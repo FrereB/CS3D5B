@@ -17,7 +17,10 @@ import android.net.*;
 
 import java.util.concurrent.TimeUnit;
 
-import trinity.cs3d5b.quizz.utilities.JsonParser;
+import java.util.UUID;
+
+import trinity.cs3d5b.quizz.database.UserDatabase;
+import trinity.cs3d5b.quizz.database.UserModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -192,7 +195,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
-                (new JsonParser(getApplicationContext())).addToLeaderBoard(name,message,image);
+
+                // Submit current score to leaderboard
+                UserDatabase userDatabase = new UserDatabase();
+                UserModel userModel =
+                        new UserModel(UUID.randomUUID().toString(), name, image, mScore);
+                userDatabase.insert(userModel, null);
+
                 //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
                 String numOfQsMessage = Integer.toString(4);
 
@@ -225,7 +234,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
             String scoreMessage = Integer.toString(mScore);
-            (new JsonParser(getApplicationContext())).addToLeaderBoard(name,scoreMessage,image);
+
+            // Submit score to leaderboard
+            UserDatabase userDatabase = new UserDatabase();
+            UserModel userModel =
+                    new UserModel(UUID.randomUUID().toString(), name, image, mScore);
+            userDatabase.insert(userModel, null);
+
             //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
 
             intent.putExtra(EXTRA_MESSAGE, scoreMessage);

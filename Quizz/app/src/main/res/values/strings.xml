@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Quizz</string>
     <string name="title_activity_login">Sign in</string>
+
+    <!-- Root Activity -->
+    <string name="root_splash_text">Quizz</string>
+
     <!-- Strings related to login -->
     <string name="user_name">User name</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -24,4 +28,8 @@
 
     <string name="share_score">Share your score</string>
     <string name="leaderboard">Leaderboard</string>
+
+    <!-- MongoDB Stitch -->
+    <string name="stitch_app_id">quizz-vvoch</string>
+
 </resources>
