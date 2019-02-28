@@ -1,6 +1,11 @@
 package trinity.cs3d5b.quizz;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.CountDownTimer;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,8 +13,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.net.*;
 
-import trinity.cs3d5b.quizz.utilities.JsonParser;
+import java.util.concurrent.TimeUnit;
+
+import java.util.UUID;
+
+import trinity.cs3d5b.quizz.database.UserDatabase;
+import trinity.cs3d5b.quizz.database.UserModel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
 
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
 
+    public static String picture;
+
     private TextView mScoreView;
     private TextView mQuestionView;
     private Button mButtonChoice1;
@@ -27,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private Button mButtonChoice3;
     private Button mButtonChoice4;
     private Button mQuitButton;
+    private Question currentQuestion;
 
     private String mAnswer;
     private String name = "";
@@ -34,6 +48,12 @@ public class MainActivity extends AppCompatActivity {
     private int mScore = 0;
     private int mQuestionNumber = 0;
     private boolean gameOver = false;
+
+    //timer code
+    private TextView timerTextView;
+    private CounterClass timer;
+    long remainMilli = 0;
+    boolean isRunning = false;
 
 
     @Override
@@ -51,34 +71,40 @@ public class MainActivity extends AppCompatActivity {
         //mQuestionLibrary.setQuestionLibrary("General Knowledge");
         mQuestionLibrary.setQuestionLibrary(Qlib);
 
-        ImageView ImageView1 = (ImageView) findViewById(R.id.pictureprofile);
-        if(image!=null) {
-            if (image.equals("avatar1")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
 
-            }
+        ImageView profilePicture = (ImageView) findViewById(R.id.pictureprofile);
 
-            if (image.equals("avatar2")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar1));
-            }
-
-            if (image.equals("avatar3")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar3));
-            }
-
-            if (image.equals("avatar4")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar4));
-            }
-
-            if (image.equals("avatar5")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar5));
-            }
-
-            if (image.equals("avatar6")) {
-                ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-            }
+        Bundle extras = intent.getExtras();
+        picture = extras.getString("picture");
+        int type = extras.getInt("type");
 
 
+        if (type == 1) { // Photo from the gallery of the user
+            //We get the id and we display the picture
+            int id = getResources().getIdentifier(picture, "drawable", getPackageName());
+            profilePicture.setImageResource(id);
+            profilePicture.setTag(picture);
+        } else if (type == 2) { // Avatar already available
+            //We get the uri and we display the picture
+            Uri uriSelectedImage = intent.getParcelableExtra("imageUri");
+
+            //All the path of the picture from the user phone
+            String[] filePathCol = {MediaStore.Images.Media.DATA};
+
+            //Cursor to access to the path of the picture
+            Cursor cursor = this.getContentResolver().query(uriSelectedImage, filePathCol, null, null, null);
+            cursor.moveToFirst();
+
+            //We recover the path of the picture
+
+            int columIndex = cursor.getColumnIndex(filePathCol[0]);
+            String imgPath = cursor.getString(columIndex);
+            cursor.close();
+            //get the Image
+            Bitmap image = BitmapFactory.decodeFile(imgPath);
+            //Display the picture
+
+            profilePicture.setImageBitmap(image);
 
 
         }
@@ -87,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = findViewById(R.id.pseudo);
         textView.setText(name);
 
+        timerTextView = findViewById(R.id.timerTextView);
+        timer = new CounterClass(15000,1);
+        timer.start();
         mScoreView = findViewById(R.id.score);
         mQuestionView = findViewById(R.id.question);
         mButtonChoice1 = findViewById(R.id.choice1);
@@ -172,7 +201,13 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
-                (new JsonParser(getApplicationContext())).addToLeaderBoard(name,message,image);
+
+                // Submit current score to leaderboard
+                UserDatabase userDatabase = new UserDatabase();
+                UserModel userModel =
+                        new UserModel(UUID.randomUUID().toString(), name, image, mScore);
+                userDatabase.insert(userModel, null);
+
                 //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
                 String numOfQsMessage = Integer.toString(4);
 
@@ -185,13 +220,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateQuestion() {
 
         if (!gameOver) {
-            mQuestionView.setText(mQuestionLibrary.getQuestion(mQuestionNumber));
-            mButtonChoice1.setText(mQuestionLibrary.getChoice1(mQuestionNumber));
-            mButtonChoice2.setText(mQuestionLibrary.getChoice2(mQuestionNumber));
-            mButtonChoice3.setText(mQuestionLibrary.getChoice3(mQuestionNumber));
-            mButtonChoice4.setText(mQuestionLibrary.getChoice4(mQuestionNumber));
+            currentQuestion = mQuestionLibrary.getQuestion(mQuestionNumber);
 
-            mAnswer = mQuestionLibrary.getCorrectAnswer(mQuestionNumber);
+            mQuestionView.setText(currentQuestion.getQuestion());
+            mButtonChoice1.setText(currentQuestion.getAnswers().get(0));
+            mButtonChoice2.setText(currentQuestion.getAnswers().get(1));
+            mButtonChoice3.setText(currentQuestion.getAnswers().get(2));
+            mButtonChoice4.setText(currentQuestion.getAnswers().get(3));
+
+            mAnswer = currentQuestion.getCorrectAnswer();
 
             mQuestionNumber++;
 
@@ -203,16 +240,56 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
             String scoreMessage = Integer.toString(mScore);
-            (new JsonParser(getApplicationContext())).addToLeaderBoard(name,scoreMessage,image);
+
+            // Submit score to leaderboard
+            UserDatabase userDatabase = new UserDatabase();
+            UserModel userModel =
+                    new UserModel(UUID.randomUUID().toString(), name, image, mScore);
+            userDatabase.insert(userModel, null);
+
             //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
 
             intent.putExtra(EXTRA_MESSAGE, scoreMessage);
             startActivity(intent);
         }
+        timer.start();
     }
 
     private void updateScore() {
         mScoreView.setText("" + mScore);
     }
 
+    public class CounterClass extends CountDownTimer {
+        //All three methods (constructor) need to be overridden to use this class
+
+        //Default Constructor
+        public CounterClass(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+
+        }
+
+        //When timer is ticking, what should happen at that duration; will go in this method
+        @Override
+        public void onTick(long millisUntilFinished) {
+            remainMilli = millisUntilFinished;
+
+            //Format to display the timer
+            String hms = String.format("%02d . %03d",
+                    TimeUnit.MILLISECONDS.toSeconds(remainMilli)- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainMilli)),
+                    TimeUnit.MILLISECONDS.toMillis(remainMilli) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(remainMilli)));
+
+            timerTextView.setText(hms);
+
+        }
+
+        //When time is finished, what should happen: will go in this method
+        @Override
+        public void onFinish() {
+            // reset all variables
+            isRunning=false;
+            remainMilli=0;
+            Toast.makeText(MainActivity.this, "Out of Time!", Toast.LENGTH_SHORT).show();
+            updateQuestion();
+        }
+    }
 }

@@ -7,110 +7,103 @@
     android:orientation ="vertical"
     tools:context=".ProfilePicture">
 
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="50dp"
+
+        >
+
+        <Button
+            android:id="@+id/PictureGallery"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="0dp"
+            android:clickable="true"
+            android:text="Choose a picture of my gallery" />
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="50dp"
+
+
+        >
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Choose an existing avatar"
+            android:clickable="true"
+            android:onClick="goToAvatar"
+            />
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="-20dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="50dp"
 
 
         >
 
-
         <ImageView
-            android:id="@+id/Picture1"
-            android:layout_width="137dp"
-            android:layout_height="175dp"
-            android:layout_alignParentLeft="true"
-            android:clickable="true"
-            android:onClick="imageClick"
-            android:src="@drawable/avatar1" />
 
+            android:id="@+id/galleryPic"
+            android:layout_marginLeft="80dip"
+            android:layout_marginRight="25dip"
+            android:layout_width="65dp"
+            android:layout_height="48dp"
 
-        <ImageView
-            android:id="@+id/Picture2"
-            android:layout_width="137dp"
-            android:layout_height="175dp"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:onClick="imageClick"
-            android:src="@drawable/avatar2" />
+            />
+
 
     </RelativeLayout>
 
+
     <RelativeLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="80dp"
-        android:layout_marginTop="-60dp"
+        android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="50dp"
-       >
 
 
-        <ImageView
-            android:id="@+id/Picture3"
-            android:layout_width="137dp"
-            android:layout_height="175dp"
-            android:layout_alignParentLeft="true"
-            android:clickable="true"
-            android:onClick="imageClick"
-            android:src="@drawable/avatar3" />
-
-
-        <ImageView
-            android:id="@+id/Picture4"
-            android:layout_width="137dp"
-            android:layout_height="175dp"
-            android:layout_alignParentRight="true"
-            android:clickable="true"
-            android:onClick="imageClick"
-            android:src="@drawable/avatar4" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="80dp"
-        android:layout_marginTop="-60dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="50dp"
         >
-
-
-        <ImageView
-            android:id="@+id/Picture5"
-            android:layout_width="137dp"
-            android:layout_height="175dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="11dp"
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue"
             android:clickable="true"
-            android:onClick="imageClick"
-            android:src="@drawable/avatar5" />
+            android:onClick="goToLoginPage"
+            />
 
-
-    <ImageView
-        android:id="@+id/Picture6"
-        android:layout_width="137dp"
-        android:layout_height="175dp"
-        android:layout_alignParentRight="true"
-        android:clickable="true"
-        android:onClick="imageClick"
-        android:src="@drawable/avatar6" />
 
     </RelativeLayout>
-
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>

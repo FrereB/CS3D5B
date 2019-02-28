@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Quizz</string>
     <string name="title_activity_login">Sign in</string>
+
+    <!-- Root Activity -->
+    <string name="root_splash_text">Quizz</string>
+
     <!-- Strings related to login -->
     <string name="user_name">User name</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -21,6 +25,8 @@
     <string name="score">Score</string>
     <string name="game_over">Game Over! You got a score of</string>
     <string name="return_home">Return Home</string>
+
+    <string name="share_score">Share your score</string>
     <string name="leaderboard">Leaderboard</string>
     <string name="title_activity_category">CategoryActivity</string>
     <string name="large_text">
@@ -113,4 +119,8 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="action_settings">Settings</string>
+
+    <!-- MongoDB Stitch -->
+    <string name="stitch_app_id">quizz-vvoch</string>
+
 </resources>
