@@ -11,7 +11,9 @@ import android.widget.Button;
 
 public class CategoryActivity extends AppCompatActivity {
 
-    //public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
+    public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
+    public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
+    public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
 
     private Button category1;
     private Button category2;
@@ -82,6 +84,11 @@ public class CategoryActivity extends AppCompatActivity {
         String categoryMessage;
         Bundle stats = new Bundle();
         Intent mIntent = new Intent(this, MainActivity.class);
+        String name = getIntent().getStringExtra(LoginPage.EXTRA_NAME);
+        String image = getIntent().getStringExtra(LoginPage.EXTRA_PICTURE);
+        mIntent.putExtra(EXTRA_NAME,name);
+        mIntent.putExtra(EXTRA_PICTURE,image);
+
 
         switch(view.getId()){
             case R.id.category1 :
@@ -89,9 +96,12 @@ public class CategoryActivity extends AppCompatActivity {
                 System.out.print(categoryMessage);
                 stats.putString("category",categoryMessage );
                 mIntent.putExtras(stats);
+                mIntent.putExtra(EXTRA_CATEGORY,categoryMessage);
                 setResult(RESULT_OK, mIntent);
+                startActivity(mIntent);
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                 finish();
-                //startActivity(mIntent);
+                break;
 
             case R.id.category2 :
                 categoryMessage = (String) category2.getText();
