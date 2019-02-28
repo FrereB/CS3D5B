@@ -1,6 +1,7 @@
 package trinity.cs3d5b.quizz.utilities;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,11 @@ import android.widget.TextView;
 import java.util.List;
 
 import trinity.cs3d5b.quizz.R;
+import trinity.cs3d5b.quizz.database.PictureEncoder;
 import trinity.cs3d5b.quizz.database.UserModel;
+
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVATAR;
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
 
 public class LeaderBoardAdapter extends ArrayAdapter<UserModel> {
 
@@ -42,8 +47,22 @@ public class LeaderBoardAdapter extends ArrayAdapter<UserModel> {
         try {
             ((TextView) convertView.findViewById(R.id.name)).setText(userModel.getName());
             ((TextView) convertView.findViewById(R.id.score)).setText(Integer.toString(userModel.getHighScore()));
-            int id = context.getResources().getIdentifier(userModel.getProfilePicture(), "drawable", context.getPackageName());
-            ((ImageView) convertView.findViewById(R.id.picture)).setImageResource(id);
+
+            String pictureType = userModel.getProfilePictureType();
+            switch (pictureType) {
+                case PICTURE_TYPE_AVATAR:
+                    int id = context.getResources().getIdentifier(userModel.getProfilePictureData(), "drawable", context.getPackageName());
+                    ((ImageView) convertView.findViewById(R.id.picture)).setImageResource(id);
+                    break;
+                case PICTURE_TYPE_UPLOAD:
+                    String base64 = userModel.getProfilePictureData();
+                    Bitmap bitmap = new PictureEncoder().decodeBase64ToBitmap(base64);
+                    ((ImageView) convertView.findViewById(R.id.picture)).setImageBitmap(bitmap);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unknown picture type: " + pictureType);
+            }
+
         } catch (Exception e){}
 
         return convertView;

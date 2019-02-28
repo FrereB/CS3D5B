@@ -1,19 +1,29 @@
 package trinity.cs3d5b.quizz;
 
 
-
 import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.content.*;
 import android.provider.MediaStore;
-import android.widget.*;
 import android.support.v7.app.AppCompatActivity;
-import android.view.*;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 
+import java.util.UUID;
+
+import trinity.cs3d5b.quizz.authentication.AuthCache;
+import trinity.cs3d5b.quizz.database.PictureEncoder;
+import trinity.cs3d5b.quizz.database.UserDatabase;
+import trinity.cs3d5b.quizz.database.UserModel;
+
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVATAR;
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
 
 
 public class LoginPage extends AppCompatActivity  {
@@ -73,21 +83,51 @@ public class LoginPage extends AppCompatActivity  {
 //If every information are complet, we can go to the quizz part
             String name = userName.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
-            Bundle stats = new Bundle();
             if(picture!=null) {
-
+                Bundle stats = new Bundle();
                 stats.putString("picture", picture);
                 stats.putInt("type", 1);
+
                 intent.putExtras(stats);
                 setResult(RESULT_OK, intent);
                 startActivity(intent);
+
+                UserModel newUser = new UserModel(
+                        UUID.randomUUID().toString(),
+                        name,
+                        PICTURE_TYPE_AVATAR,
+                        picture,
+                        0
+                        );
+                UserDatabase userDatabase = new UserDatabase();
+                userDatabase.insert(newUser, null);
+
+                AuthCache.Companion.login(newUser);
             }
             else if(uriSelectedImage!=null){
+                Bundle stats = new Bundle();
                 stats.putInt("type", 2);
+
                 intent.putExtras(stats);
                 intent.putExtra("imageUri",uriSelectedImage);
                 setResult(RESULT_OK, intent);
                 startActivity(intent);
+
+                PictureEncoder pictureEncoder = new PictureEncoder();
+                Bitmap imageBitmap = pictureEncoder.convertUriToBitmap(this, uriSelectedImage);
+                String base64 = pictureEncoder.encodeBitmapToBase64(imageBitmap);
+
+                UserModel newUser = new UserModel(
+                        UUID.randomUUID().toString(),
+                        name,
+                        PICTURE_TYPE_UPLOAD,
+                        base64,
+                        0
+                );
+                UserDatabase userDatabase = new UserDatabase();
+                userDatabase.insert(newUser, null);
+
+                AuthCache.Companion.login(newUser);
             }
         }
     }

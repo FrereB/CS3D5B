@@ -4,21 +4,20 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.net.*;
 
 import java.util.concurrent.TimeUnit;
 
-import java.util.UUID;
-
+import trinity.cs3d5b.quizz.authentication.AuthCache;
 import trinity.cs3d5b.quizz.database.UserDatabase;
 import trinity.cs3d5b.quizz.database.UserModel;
 
@@ -197,10 +196,13 @@ public class MainActivity extends AppCompatActivity {
                 String message = Integer.toString(mScore);
 
                 // Submit current score to leaderboard
-                UserDatabase userDatabase = new UserDatabase();
-                UserModel userModel =
-                        new UserModel(UUID.randomUUID().toString(), name, image, mScore);
-                userDatabase.insert(userModel, null);
+                UserModel currentUser = AuthCache.Companion.getUserModel();
+                if (currentUser != null) {
+                    currentUser.setHighScore(mScore);
+
+                    UserDatabase userDatabase = new UserDatabase();
+                    userDatabase.update(currentUser.getId(), currentUser, null);
+                }
 
                 //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
                 String numOfQsMessage = Integer.toString(4);
@@ -236,10 +238,13 @@ public class MainActivity extends AppCompatActivity {
             String scoreMessage = Integer.toString(mScore);
 
             // Submit score to leaderboard
-            UserDatabase userDatabase = new UserDatabase();
-            UserModel userModel =
-                    new UserModel(UUID.randomUUID().toString(), name, image, mScore);
-            userDatabase.insert(userModel, null);
+            UserModel currentUser = AuthCache.Companion.getUserModel();
+            if (currentUser != null) {
+                currentUser.setHighScore(mScore);
+
+                UserDatabase userDatabase = new UserDatabase();
+                userDatabase.update(currentUser.getId(), currentUser, null);
+            }
 
             //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
 
