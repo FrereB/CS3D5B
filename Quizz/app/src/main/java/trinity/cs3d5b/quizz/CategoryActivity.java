@@ -91,7 +91,6 @@ public class CategoryActivity extends AppCompatActivity {
                 mIntent.putExtras(stats);
                 setResult(RESULT_OK, mIntent);
                 finish();
-                //startActivity(mIntent);
 
             case R.id.category2 :
                 categoryMessage = (String) category2.getText();

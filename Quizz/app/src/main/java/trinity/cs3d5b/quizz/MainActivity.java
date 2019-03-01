@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     //private String Qlib = "General Knowledge";
     private String Qlib = "";
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary();
+    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(this);
 
     private TextView mScoreView;
     private TextView mQuestionView;
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice1.getText() == mAnswer) {
+                if (mButtonChoice1.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice2.getText() == mAnswer) {
+                if (mButtonChoice2.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice3.getText() == mAnswer) {
+                if (mButtonChoice3.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice4.getText() == mAnswer) {
+                if (mButtonChoice4.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
