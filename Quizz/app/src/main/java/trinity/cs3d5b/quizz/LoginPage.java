@@ -29,7 +29,6 @@ import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLO
 public class LoginPage extends AppCompatActivity  {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
-    public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
     public static String picture;
     public static Uri uriSelectedImage;
 
@@ -144,23 +143,18 @@ public class LoginPage extends AppCompatActivity  {
             //If not we display an Alert box to force him to put choose a picture
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginPage.this);
             builder.setCancelable(true);
-            builder.setTitle("You need to choose a profile picture");
+            builder.setTitle("You need to choose a profil picture");
 
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    //After the close of the dialog box we open the page to choose the profile picture
+                    //After the close of the dialog box we open the page to choose the profil picture
                     goToPicture(view);
 
                 }
             });
-
             builder.show();
-
-
-
         }
-
         else {
             //If all the data is complete, we can go to choosing the difficulty
             String name = userName.getText().toString();
@@ -284,6 +278,8 @@ public class LoginPage extends AppCompatActivity  {
         Intent intent = new Intent(this,ProfilePicture.class);
         startActivityForResult(intent,PICTURE);
     }
+
+
 
 
 

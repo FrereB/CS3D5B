@@ -76,13 +76,12 @@ public class PVC extends AppCompatActivity {
 
         if (type == 1) { // Photo from the gallery of the user
             //We get the id and we display the picture
-            picture = extras.getString("picture");
             int id = getResources().getIdentifier(picture, "drawable", getPackageName());
             profilePicture.setImageResource(id);
-            profilePicture.setTag(picture);
+
         } else if (type == 2) { // Avatar already available
             //We get the uri and we display the picture
-            Uri uriSelectedImage = intent.getParcelableExtra("uri");
+            Uri uriSelectedImage = intent.getParcelableExtra("imageUri");
 
             //All the path of the picture from the user phone
             String[] filePathCol = {MediaStore.Images.Media.DATA};
@@ -107,7 +106,7 @@ public class PVC extends AppCompatActivity {
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.pseudo);
-        textView.setText(name);
+        textView.setText("test");
 
         timerTextView = findViewById(R.id.timerTextView);
         timer = new PVC.CounterClass(15000, 1);
