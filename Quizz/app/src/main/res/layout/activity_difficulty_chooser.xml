@@ -1,75 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation ="vertical"
-    tools:context=".LoginPage">
-
-
-    <EditText
-            android:id="@+id/name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:hint="Username"
-            android:inputType="textPersonName" />
-
-
-    <ImageView
-        android:id="@+id/picturechoose"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-       />
+    android:orientation="vertical"
+    tools:context=".DifficultyChooser">
 
 
     <Button
-        android:id="@+id/buttonPicture"
+        android:id="@+id/buttonEasy"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="25dip"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="125dp"
         android:layout_marginRight="25dip"
-        android:onClick="goToPicture"
-        android:text="Choose a picture" />
+        android:background="@android:color/holo_green_light"
+        android:onClick="chooseEasy"
+        android:text="Easy" />
 
 
     <Button
-        android:id="@+id/buttonSignin"
+        android:id="@+id/buttonMedium"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="25dip"
-        android:layout_marginRight="25dip"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="300dp"
-        android:onClick="goToMainActivity"
-        android:text="Start"
+        android:layout_marginLeft="25dip"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="25dip"
+        android:background="@android:color/holo_orange_light"
+        android:onClick="chooseMedium"
+        android:text="Medium"
 
         />
 
     <Button
-        android:id="@+id/buttonLeaderboard"
+        android:id="@+id/buttonHard"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="25dip"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="375dp"
         android:layout_marginRight="25dip"
-        android:onClick="goToLeaderboard"
-        android:text="@string/leaderboard"
+        android:background="@android:color/holo_orange_dark"
+        android:onClick="chooseHard"
+        android:text="Hard"
 
         />
 
     <Button
-        android:id="@+id/buttonpvc"
+        android:id="@+id/buttonExpert"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,10 +60,9 @@
         android:layout_marginLeft="25dip"
         android:layout_marginTop="500dp"
         android:layout_marginRight="25dip"
-        android:onClick="goToPVC"
-        android:text="PVC"
+        android:background="@android:color/holo_red_dark"
+        android:onClick="chooseExpert"
+        android:text="Expert"
 
         />
-
-
 </RelativeLayout>

@@ -23,6 +23,7 @@
     <string name="question1">Which of these is the right answer?</string>
     <string name="new_quiz">New Quiz</string>
     <string name="score">Score</string>
+    <string name="computerScore">Computer</string>
     <string name="game_over">Game Over! You got a score of</string>
     <string name="return_home">Return Home</string>
 
