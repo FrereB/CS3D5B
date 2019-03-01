@@ -13,7 +13,7 @@ public class LoginPage extends AppCompatActivity  {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
-    public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
+    //public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
     private final int PICK_PICTURE_REQUEST = 1; //The request code
     private final int CATEGORY_REQUEST = 3;   //Other request code
 
@@ -31,7 +31,7 @@ public class LoginPage extends AppCompatActivity  {
     protected void goToMainActivity(View view) {
 
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, CategoryActivity.class);
         EditText editText = findViewById(R.id.name);
 
         if (editText.getText().toString().trim().equals("")) {
@@ -49,7 +49,7 @@ public class LoginPage extends AppCompatActivity  {
             }
 
             goToCategory();
-            intent.putExtra(EXTRA_CATEGORY, category);
+            //intent.putExtra(EXTRA_CATEGORY, category);
 
             startActivity(intent);
         }
