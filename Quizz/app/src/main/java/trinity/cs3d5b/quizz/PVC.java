@@ -20,7 +20,6 @@ import trinity.cs3d5b.quizz.database.UserModel;
 
 import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVATAR;
 import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
-
 public class PVC extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
@@ -29,6 +28,8 @@ public class PVC extends AppCompatActivity {
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
 
     private TextView mScoreView;
+
+
     private TextView cScoreView;
     private TextView mQuestionView;
     private Button mButtonChoice1;
