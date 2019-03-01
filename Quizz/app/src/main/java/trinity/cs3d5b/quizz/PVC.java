@@ -276,6 +276,11 @@ public class PVC extends AppCompatActivity {
         }
         timer.start();
     }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        timer.cancel();
+    }
 
     private void updateScore() {
         mScoreView.setText("" + mScore);
