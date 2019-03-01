@@ -18,6 +18,8 @@ class AuthCache {
         fun logout() {
             userModel = null
         }
+
+        fun isLoggedIn() = userModel != null
     }
 
 }
