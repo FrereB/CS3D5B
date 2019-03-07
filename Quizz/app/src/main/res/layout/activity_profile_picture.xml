@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:background="@drawable/button_background"
             android:layout_marginRight="0dp"
             android:clickable="true"
             android:text="Choose a picture of my gallery" />
@@ -48,6 +49,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Choose an existing avatar"
             android:clickable="true"
             android:onClick="goToAvatar"
@@ -97,6 +99,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Continue"
             android:clickable="true"
             android:onClick="goToLoginPage"

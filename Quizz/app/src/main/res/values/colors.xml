@@ -7,4 +7,8 @@
     <color name="colorSecondaryDark">#003e8e</color>
     <color name="colorSecondaryLight">#6795f2</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="button_pressed">#F595A1 </color>
+    <color name="button_default">#D81B60</color>
+
+
 </resources>

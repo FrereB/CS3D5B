@@ -32,6 +32,7 @@
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="25dip"
         android:layout_marginTop="200dp"
@@ -43,6 +44,7 @@
     <Button
         android:id="@+id/buttonSignin"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dip"
@@ -58,6 +60,7 @@
         android:id="@+id/buttonLeaderboard"
         style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
+        android:background="@drawable/button_background"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="25dip"
@@ -71,6 +74,7 @@
     <Button
         android:id="@+id/buttonpvc"
         style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
