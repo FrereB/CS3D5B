@@ -203,10 +203,10 @@ public class MainActivity extends AppCompatActivity {
                 String message = Integer.toString(mScore);
 
                 // Submit current score to leaderboard
-                UserDatabase userDatabase = new UserDatabase();
+                /*UserDatabase userDatabase = new UserDatabase();
                 UserModel userModel =
                         new UserModel(UUID.randomUUID().toString(), name, image, mScore);
-                userDatabase.insert(userModel, null);
+                userDatabase.insert(userModel, null);*/
 
                 //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
                 String numOfQsMessage = Integer.toString(4);
@@ -242,10 +242,10 @@ public class MainActivity extends AppCompatActivity {
             String scoreMessage = Integer.toString(mScore);
 
             // Submit score to leaderboard
-            UserDatabase userDatabase = new UserDatabase();
+            /*UserDatabase userDatabase = new UserDatabase();
             UserModel userModel =
                     new UserModel(UUID.randomUUID().toString(), name, image, mScore);
-            userDatabase.insert(userModel, null);
+            userDatabase.insert(userModel, null);*/
 
             //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
 

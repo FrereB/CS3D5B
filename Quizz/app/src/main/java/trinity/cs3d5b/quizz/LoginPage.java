@@ -46,9 +46,7 @@ public class LoginPage extends AppCompatActivity  {
 
 
         Intent intent = new Intent(this, CategoryActivity.class);
-        EditText editText = findViewById(R.id.name);
         //We give the informaion to the main activity
-        Intent intent = new Intent(this, MainActivity.class);
         EditText userName = findViewById(R.id.name);
 
 
@@ -100,12 +98,8 @@ public class LoginPage extends AppCompatActivity  {
                 setResult(RESULT_OK, intent);
                 startActivity(intent);
             }
-            if (tvpic.getTag() != null) {
-                String picture = tvpic.getTag().toString();
-                intent.putExtra(EXTRA_PICTURE, picture);
-            }
 
-            goToCategory();
+            //goToCategory();
             //intent.putExtra(EXTRA_CATEGORY, category);
 
             startActivity(intent);
@@ -172,18 +166,12 @@ public class LoginPage extends AppCompatActivity  {
 
             }
         }
-                if(picture.equals("avatar6")) {
-                    ImageView1.setImageDrawable(getDrawable(R.drawable.avatar6));
-                    ImageView1.setTag("avatar6");
-                }
-            }
-        }
 
-        else if (requestCode == CATEGORY_REQUEST){
-            if(resultCode == RESULT_OK){
-                category = extras.getString("category");
-            }
-        }
+        //else if (requestCode == CATEGORY_REQUEST){
+        //    if(resultCode == RESULT_OK){
+        //        category = extras.getString("category");
+        //    }
+        //}
     }
 
 
