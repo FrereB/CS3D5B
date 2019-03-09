@@ -13,7 +13,6 @@ public class CategoryActivity extends AppCompatActivity {
 
     public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
-    public static final String EXTRA_PICTURE = "trinity.cs3d5b.quizz.PICTURE";
 
     //private String categoryString;
     //private String name = "";
@@ -62,9 +61,15 @@ public class CategoryActivity extends AppCompatActivity {
         Bundle stats = new Bundle();
         Intent mIntent = new Intent(this, MainActivity.class);
         String name = getIntent().getStringExtra(LoginPage.EXTRA_NAME);
-        String image = getIntent().getStringExtra(LoginPage.EXTRA_PICTURE);
+
+        Bundle extras = getIntent().getExtras();
+        String picture = extras.getString("picture");
+        int type = extras.getInt("type");
+        stats.putString("picture", picture);
+        stats.putInt("type", type);
+        mIntent.putExtras(stats);
+
         mIntent.putExtra(EXTRA_NAME,name);
-        mIntent.putExtra(EXTRA_PICTURE,image);
 
         categoryMessage = (String) ( (Button) findViewById(view.getId())).getText();
         System.out.print(categoryMessage);

@@ -64,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
         // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
         name = intent.getStringExtra(CategoryActivity.EXTRA_NAME);
-        image = intent.getStringExtra(CategoryActivity.EXTRA_PICTURE);
         Qlib = intent.getStringExtra(CategoryActivity.EXTRA_CATEGORY);
 
         //mQuestionLibrary.setQuestionLibrary("General Knowledge");

@@ -25,7 +25,7 @@ public class PVC extends AppCompatActivity {
 
     private String Qlib = "General Knowledge";
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
+    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(getApplicationContext());
 
     private TextView mScoreView;
 
