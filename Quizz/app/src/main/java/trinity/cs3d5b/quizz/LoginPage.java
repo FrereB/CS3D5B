@@ -1,6 +1,7 @@
 package trinity.cs3d5b.quizz;
 
 
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.*;
+import android.content.*;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -34,19 +37,27 @@ public class LoginPage extends AppCompatActivity  {
 
     public static final int PICTURE = 1;//The request code for profil picture;
 
+    //public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
+    private final int PICK_PICTURE_REQUEST = 1; //The request code
+    private final int CATEGORY_REQUEST = 3;   //Other request code
+
+    private String category;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+
+        category = "";
     }
 
 
     //Go to Main Activity
     protected void goToMainActivity(final View view) {
 
-        //We give the information to the main activity
-        Intent intent = new Intent(this, MainActivity.class);
+
+        Intent intent = new Intent(this, CategoryActivity.class);
+        //We give the informaion to the main activity
         EditText userName = findViewById(R.id.name);
 
 
@@ -205,6 +216,11 @@ public class LoginPage extends AppCompatActivity  {
 
                 AuthCache.Companion.login(newUser);
             }
+
+            //goToCategory();
+            //intent.putExtra(EXTRA_CATEGORY, category);
+
+            startActivity(intent);
         }
 
     }
@@ -279,10 +295,13 @@ public class LoginPage extends AppCompatActivity  {
         startActivityForResult(intent,PICTURE);
     }
 
+    protected void goToCategory(){
 
+        Intent intent = new Intent(this, CategoryActivity.class);
+        startActivityForResult(intent,CATEGORY_REQUEST);
 
-
-
+        return;
+    }
 }
 
 

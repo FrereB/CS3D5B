@@ -25,9 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    private String Qlib = "General Knowledge";
+    //private String Qlib = "General Knowledge";
+    private String Qlib = "";
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
+    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(this);
 
     public static String picture;
 
@@ -60,9 +61,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        // Get the Intent that started this activity and extract the string
+        // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
-        name = intent.getStringExtra(LoginPage.EXTRA_NAME);
+        name = intent.getStringExtra(CategoryActivity.EXTRA_NAME);
+        Qlib = intent.getStringExtra(CategoryActivity.EXTRA_CATEGORY);
+
+        //mQuestionLibrary.setQuestionLibrary("General Knowledge");
+        mQuestionLibrary.setQuestionLibrary(Qlib);
 
 
         ImageView profilePicture = (ImageView) findViewById(R.id.pictureprofile);
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice1.getText() == mAnswer) {
+                if (mButtonChoice1.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -140,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice2.getText() == mAnswer) {
+                if (mButtonChoice2.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -157,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice3.getText() == mAnswer) {
+                if (mButtonChoice3.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -174,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mButtonChoice4.getText() == mAnswer) {
+                if (mButtonChoice4.getText().equals(mAnswer)) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
@@ -252,6 +257,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         timer.start();
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        timer.cancel();
     }
 
     private void updateScore() {
