@@ -123,4 +123,5 @@
     <!-- MongoDB Stitch -->
     <string name="stitch_app_id">quizz-vvoch</string>
 
+    <string name="title_activity_main_category">MainCategoryActivity</string>
 </resources>
