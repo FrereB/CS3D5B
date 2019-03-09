@@ -1,13 +1,9 @@
 package trinity.cs3d5b.quizz;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -18,21 +14,23 @@ import android.widget.Toast;
 import java.util.concurrent.TimeUnit;
 
 import trinity.cs3d5b.quizz.authentication.AuthCache;
+import trinity.cs3d5b.quizz.database.PictureEncoder;
 import trinity.cs3d5b.quizz.database.UserDatabase;
 import trinity.cs3d5b.quizz.database.UserModel;
 
-public class MainActivity extends AppCompatActivity {
-
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVATAR;
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
+public class PVC extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    //private String Qlib = "General Knowledge";
-    private String Qlib = "";
+    private String Qlib = "General Knowledge";
 
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(this);
-
-    public static String picture;
+    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(Qlib);
 
     private TextView mScoreView;
+
+
+    private TextView cScoreView;
     private TextView mQuestionView;
     private Button mButtonChoice1;
     private Button mButtonChoice2;
@@ -42,15 +40,16 @@ public class MainActivity extends AppCompatActivity {
     private Question currentQuestion;
 
     private String mAnswer;
-    private String name = "";
-    private String image = "";
+    private UserModel userModel;
+    private double errorRate;
     private int mScore = 0;
+    private int cScore = 0;
     private int mQuestionNumber = 0;
     private boolean gameOver = false;
 
     //timer code
     private TextView timerTextView;
-    private CounterClass timer;
+    private PVC.CounterClass timer;
     long remainMilli = 0;
     boolean isRunning = false;
 
@@ -58,63 +57,44 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_pvc);
 
-
-        // Get the Intent that started this activity and extract the strings
-        Intent intent = getIntent();
-        name = intent.getStringExtra(CategoryActivity.EXTRA_NAME);
-        image = intent.getStringExtra(CategoryActivity.EXTRA_PICTURE);
-        Qlib = intent.getStringExtra(CategoryActivity.EXTRA_CATEGORY);
-
-        //mQuestionLibrary.setQuestionLibrary("General Knowledge");
-        mQuestionLibrary.setQuestionLibrary(Qlib);
-
+        if (!AuthCache.Companion.isLoggedIn()) {
+            throw new IllegalArgumentException("Not logged in");
+        }
+        userModel = AuthCache.Companion.getUserModel();
 
         ImageView profilePicture = (ImageView) findViewById(R.id.pictureprofile);
+        switch (userModel.getProfilePictureType()) {
+            case PICTURE_TYPE_AVATAR:
+                //We get the id and we display the picture
+                int id = getResources().getIdentifier(userModel.getProfilePictureData(),
+                        "drawable", getPackageName());
+                profilePicture.setImageResource(id);
+                break;
 
-        Bundle extras = intent.getExtras();
-        picture = extras.getString("picture");
-        int type = extras.getInt("type");
+            case PICTURE_TYPE_UPLOAD:
+                String base64 = userModel.getProfilePictureData();
+                Bitmap image = new PictureEncoder().decodeBase64ToBitmap(base64);
+                profilePicture.setImageBitmap(image);
+                break;
 
-
-        if (type == 1) { // Photo from the gallery of the user
-            //We get the id and we display the picture
-            int id = getResources().getIdentifier(picture, "drawable", getPackageName());
-            profilePicture.setImageResource(id);
-            profilePicture.setTag(picture);
-        } else if (type == 2) { // Avatar already available
-            //We get the uri and we display the picture
-            Uri uriSelectedImage = intent.getParcelableExtra("imageUri");
-
-            //All the path of the picture from the user phone
-            String[] filePathCol = {MediaStore.Images.Media.DATA};
-
-            //Cursor to access to the path of the picture
-            Cursor cursor = this.getContentResolver().query(uriSelectedImage, filePathCol, null, null, null);
-            cursor.moveToFirst();
-
-            //We recover the path of the picture
-
-            int columIndex = cursor.getColumnIndex(filePathCol[0]);
-            String imgPath = cursor.getString(columIndex);
-            cursor.close();
-            //get the Image
-            Bitmap image = BitmapFactory.decodeFile(imgPath);
-            //Display the picture
-
-            profilePicture.setImageBitmap(image);
-
-
+            default:
+                throw new IllegalArgumentException("Unknown profile picture type = "
+                        + userModel.getProfilePictureType());
         }
+
+        Intent intent = getIntent();
+        errorRate = intent.getDoubleExtra("errorRate", 0);
 
         // Capture the layout's TextView and set the string as its text
         TextView textView = findViewById(R.id.pseudo);
-        textView.setText(name);
+        textView.setText(userModel.getName());
 
         timerTextView = findViewById(R.id.timerTextView);
-        timer = new CounterClass(15000,1);
+        timer = new PVC.CounterClass(15000, 1);
         timer.start();
+        cScoreView = findViewById(R.id.computerScore);
         mScoreView = findViewById(R.id.score);
         mQuestionView = findViewById(R.id.question);
         mButtonChoice1 = findViewById(R.id.choice1);
@@ -128,15 +108,15 @@ public class MainActivity extends AppCompatActivity {
         mButtonChoice1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mButtonChoice1.getText().equals(mAnswer)) {
+                updateComputerScore();
+                if (mButtonChoice1.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
-                    Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Correct", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
@@ -145,15 +125,15 @@ public class MainActivity extends AppCompatActivity {
         mButtonChoice2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mButtonChoice2.getText().equals(mAnswer)) {
+                updateComputerScore();
+                if (mButtonChoice2.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
-                    Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Correct", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
@@ -162,15 +142,15 @@ public class MainActivity extends AppCompatActivity {
         mButtonChoice3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mButtonChoice3.getText().equals(mAnswer)) {
+                updateComputerScore();
+                if (mButtonChoice3.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
-                    Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Correct", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
@@ -179,16 +159,16 @@ public class MainActivity extends AppCompatActivity {
         mButtonChoice4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (mButtonChoice4.getText().equals(mAnswer)) {
+                updateComputerScore();
+                if (mButtonChoice4.getText() == mAnswer) {
                     mScore = mScore + 1;
                     updateScore();
                     updateQuestion();
                     //This line of code is optional
-                    Toast.makeText(MainActivity.this, "Correct", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Correct", Toast.LENGTH_SHORT).show();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Wrong", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PVC.this, "Wrong", Toast.LENGTH_SHORT).show();
                     updateQuestion();
                 }
             }
@@ -197,8 +177,8 @@ public class MainActivity extends AppCompatActivity {
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
+                Toast.makeText(PVC.this, "Game Over", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(PVC.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
 
                 // Submit current score to leaderboard
@@ -217,6 +197,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private void updateComputerScore(){
+        double random = Math.random();
+        if (random > errorRate){
+            cScore += 1;
+            cScoreView.setText("" + cScore);
+        }
     }
 
     private void updateQuestion() {
@@ -239,9 +227,19 @@ public class MainActivity extends AppCompatActivity {
                 gameOver = true;
             }
         } else {
-            Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
-            String scoreMessage = Integer.toString(mScore);
+            Toast.makeText(PVC.this, "Game Over", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(PVC.this, PVCEndScreen.class);
+            String playerScore = Integer.toString(mScore);
+            String computerScore = Integer.toString(cScore);
+            String message = "";
+
+            if ( mScore > cScore){
+                message = "Congratulations! you won against the computer.";
+            } else if (mScore == cScore){
+                message = "The results are in! It's a tie! Better luck next time.";
+            } else {
+                message = "Too bad! You lost against the computer! better luck next time.";
+            }
 
             // Submit score to leaderboard
             UserModel currentUser = AuthCache.Companion.getUserModel();
@@ -253,13 +251,13 @@ public class MainActivity extends AppCompatActivity {
             }
 
             //String numOfQsMessage = Integer.toString(mQuestionLibrary.getNumberOfQuestions());
-
-            intent.putExtra(EXTRA_MESSAGE, scoreMessage);
+            intent.putExtra("endMessage",message);
+            intent.putExtra("cScore",computerScore);
+            intent.putExtra("pScore", playerScore);
             startActivity(intent);
         }
         timer.start();
     }
-
     @Override
     protected void onPause(){
         super.onPause();
@@ -269,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateScore() {
         mScoreView.setText("" + mScore);
     }
+
 
     public class CounterClass extends CountDownTimer {
         //All three methods (constructor) need to be overridden to use this class
@@ -286,7 +285,7 @@ public class MainActivity extends AppCompatActivity {
 
             //Format to display the timer
             String hms = String.format("%02d . %03d",
-                    TimeUnit.MILLISECONDS.toSeconds(remainMilli)- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainMilli)),
+                    TimeUnit.MILLISECONDS.toSeconds(remainMilli) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainMilli)),
                     TimeUnit.MILLISECONDS.toMillis(remainMilli) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(remainMilli)));
 
             timerTextView.setText(hms);
@@ -297,9 +296,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onFinish() {
             // reset all variables
-            isRunning=false;
-            remainMilli=0;
-            Toast.makeText(MainActivity.this, "Out of Time!", Toast.LENGTH_SHORT).show();
+            updateComputerScore();
+            isRunning = false;
+            remainMilli = 0;
+            Toast.makeText(PVC.this, "Out of Time!", Toast.LENGTH_SHORT).show();
             updateQuestion();
         }
     }

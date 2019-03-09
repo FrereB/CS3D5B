@@ -25,6 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:background="@drawable/button_background"
             android:layout_marginRight="0dp"
             android:clickable="true"
             android:text="Choose a picture of my gallery" />
@@ -48,6 +49,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Choose an existing avatar"
             android:clickable="true"
             android:onClick="goToAvatar"
@@ -62,7 +64,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="-20dp"
+        android:layout_marginTop="-40dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="50dp"
 
@@ -72,10 +74,9 @@
         <ImageView
 
             android:id="@+id/galleryPic"
-            android:layout_marginLeft="80dip"
-            android:layout_marginRight="25dip"
-            android:layout_width="65dp"
-            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="75dp"
+            android:layout_height="60dp"
 
             />
 
@@ -98,6 +99,7 @@
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_background"
             android:text="Continue"
             android:clickable="true"
             android:onClick="goToLoginPage"

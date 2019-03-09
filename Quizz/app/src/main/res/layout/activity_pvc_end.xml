@@ -4,61 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EndScreenActivity">
+    tools:context=".PVCEndScreen">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/endMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="120dp"
         android:layout_marginEnd="8dp"
-        android:text="@string/game_over"
+        android:text=""
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/playerScore"
+        android:layout_width="117dp"
+        android:layout_height="47dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="TextView"
+        android:layout_marginBottom="8dp"
+        android:text=""
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/endMessage" />
 
     <Button
-        style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/reset_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:background="@drawable/button_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="8dp"
+        android:padding="8dp"
         android:text="@string/return_home"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
-
+        app:layout_constraintTop_toBottomOf="@+id/playerScore" />
 
 
     <Button
-        style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/share_button"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
+        android:padding="8dp"
         android:background="@drawable/button_background"
         android:text="@string/share_score"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,21 +67,35 @@
         app:layout_constraintTop_toBottomOf="@+id/reset_button" />
 
     <Button
-        style="@style/Widget.AppCompat.Button.Colored"
         android:id="@+id/buttonLeaderboard2"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="match_parent"
-        android:background="@drawable/button_background"
         android:layout_height="wrap_content"
-        android:padding="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="8dp"
+        android:onClick="goToLeaderboard"
+        android:background="@drawable/button_background"
+        android:padding="8dp"
         android:text="@string/leaderboard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/share_button"
-        android:onClick="goToLeaderboard"/>
+        app:layout_constraintTop_toBottomOf="@+id/share_button" />
 
+    <TextView
+        android:id="@+id/endCompScore"
+        android:layout_width="117dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text=""
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/reset_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/playerScore" />
 
 
 </android.support.constraint.ConstraintLayout>

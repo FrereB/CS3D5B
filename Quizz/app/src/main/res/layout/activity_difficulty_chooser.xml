@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DifficultyChooser">
+
+
+    <Button
+        android:id="@+id/buttonEasy"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dip"
+        android:layout_marginTop="125dp"
+        android:layout_marginRight="25dip"
+        android:background="@android:color/holo_green_light"
+        android:onClick="chooseEasy"
+        android:text="Easy" />
+
+
+    <Button
+        android:id="@+id/buttonMedium"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dip"
+        android:layout_marginTop="250dp"
+        android:layout_marginRight="25dip"
+        android:background="@android:color/holo_orange_light"
+        android:onClick="chooseMedium"
+        android:text="Medium"
+
+        />
+
+    <Button
+        android:id="@+id/buttonHard"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dip"
+        android:layout_marginTop="375dp"
+        android:layout_marginRight="25dip"
+        android:background="@android:color/holo_orange_dark"
+        android:onClick="chooseHard"
+        android:text="Hard"
+
+        />
+
+    <Button
+        android:id="@+id/buttonExpert"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="25dip"
+        android:layout_marginTop="500dp"
+        android:layout_marginRight="25dip"
+        android:background="@android:color/holo_red_dark"
+        android:onClick="chooseExpert"
+        android:text="Expert"
+
+        />
+</RelativeLayout>

@@ -5,24 +5,19 @@
     <!-- Root Activity -->
     <string name="root_splash_text">Quizz</string>
 
-    <!-- Strings related to login -->
+
     <string name="user_name">User name</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="error_invalid_email">This email address is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
-    <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
     <string name="answer1">Answer 1</string>
     <string name="answer2">Answer 2</string>
     <string name="answer3">Answer 3</string>
     <string name="answer4">Answer 4</string>
+    <string name="computer">Computer</string>
     <string name="question1">Which of these is the right answer?</string>
     <string name="new_quiz">New Quiz</string>
     <string name="score">Score</string>
+    <string name="computerScore">Computer Score</string>
     <string name="game_over">Game Over! You got a score of</string>
     <string name="return_home">Return Home</string>
 

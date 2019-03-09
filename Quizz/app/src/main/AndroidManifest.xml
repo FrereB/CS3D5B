@@ -34,6 +34,9 @@
         <activity android:name=".LeaderBoard" />
         <activity android:name=".EndScreenActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".DifficultyChooser" />
+        <activity android:name=".PVC" />
+        <activity android:name=".PVCEndScreen" />
     </application>
 
 </manifest>

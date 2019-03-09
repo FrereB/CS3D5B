@@ -1,6 +1,7 @@
 package trinity.cs3d5b.quizz.database
 
 import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoCollection
+import com.mongodb.stitch.android.services.mongodb.remote.RemoteMongoDatabase
 import org.bson.Document
 import trinity.cs3d5b.quizz.database.StitchHelper.Companion.mStitchAuthId
 import trinity.cs3d5b.quizz.database.StitchHelper.Companion.mStitchServiceClient
@@ -13,6 +14,7 @@ import trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.Companion.COLUMN_ID
 class UserDatabase {
 
     companion object {
+        private var mDb: RemoteMongoDatabase? = null
         private var mDbCollection: RemoteMongoCollection<Document>? = null
         private const val AUTH_ID = "owner_id"
 
@@ -22,10 +24,17 @@ class UserDatabase {
     }
 
     init {
-        mDbCollection = mStitchServiceClient?.getDatabase("database_user")
-                ?.getCollection("users")
+        mDb = mStitchServiceClient?.getDatabase("database_user")
+        mDbCollection = mDb?.getCollection("users")
     }
 
+    /**
+     * Insert an entry in the database. If the user already exist, this method
+     * should update the entry.
+     *
+     * @param userModel The user to insert.
+     * @param callback  The callback for this operation.
+     */
     fun insert(userModel: UserModel, callback: Callback?) {
         mDbCollection?.let {
             val document = userModel.toDocument()
@@ -44,13 +53,35 @@ class UserDatabase {
         }
     }
 
+    /**
+     * Delete ll entries with the supplied userId.
+     *
+     * @param userId The id of the user to delete.
+     * @param callback A callback for the operation.
+     */
     fun delete(userId: String, callback: Callback?) {
         mDbCollection?.let {
             val filter = Document()
             filter[COLUMN_ID] = userId
             appendAuthId(filter)
 
-            it.deleteOne(filter)
+            it.deleteMany(filter)
+                    .addOnSuccessListener { callback?.onSuccess() }
+                    .addOnFailureListener { callback?.onFailure() }
+
+        } ?: run {
+            callback?.onFailure()
+        }
+    }
+
+    /**
+     * This will purge the database. Use with extreme caution!
+     *
+     * @param callback A callback for the operation.
+     */
+    fun deleteAll(callback: Callback?) {
+        mDbCollection?.let {
+            it.deleteMany(null)
                     .addOnSuccessListener { callback?.onSuccess() }
                     .addOnFailureListener { callback?.onFailure() }
 
@@ -77,6 +108,12 @@ class UserDatabase {
         }
     }
 
+    /**
+     * Retrieve all entries from the database. The entries are sorted by
+     * high score in descending order.
+     *
+     * @param callback The callback for this operation.
+     */
     fun retrieveAll(callback: RetrieveCallback) {
         mDbCollection?.let {
             val queryResult: ArrayList<Document> = ArrayList()

@@ -11,33 +11,44 @@ import android.widget.Toast;
 import trinity.cs3d5b.quizz.authentication.AuthCache;
 
 
-public class EndScreenActivity extends AppCompatActivity {
+public class PVCEndScreen extends AppCompatActivity {
 
+    private static final java.lang.String EXTRA_MESSAGE ="trinity.cs3d5b.quizz.NAME" ;
     TextView score;
-    public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
+    TextView message;
+    TextView cScore;
     Button resetButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_end_screen);
+        setContentView(R.layout.activity_pvc_end);
 //
         resetButton = findViewById(R.id.reset_button);
 
         // Get the Intent that started this activity and extract the string
         Intent intent = getIntent();
-        final String scoreMessage = intent.getStringExtra(MainActivity.EXTRA_MESSAGE);
+        Bundle extras = intent.getExtras();
+        String endMessage = extras.getString("endMessage");
+        final String scoreMessage = extras.getString("pScore");
+        String computerScore = extras.getString("cScore");
 
         // Capture the layout's TextView and set the string as its text
-        score = findViewById(R.id.textView2);
+        message = findViewById(R.id.endMessage);
+        message.setText(endMessage);
+        // Capture the layout's TextView and set the string as its text
+        score = findViewById(R.id.playerScore);
         score.setText(scoreMessage);
+        // Capture the layout's computerView and set the string as its text
+        cScore = findViewById(R.id.endCompScore);
+        cScore.setText(computerScore);
 
         resetButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(EndScreenActivity.this, "New Game", Toast.LENGTH_SHORT).show();
+                Toast.makeText(PVCEndScreen.this, "New Game", Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(EndScreenActivity.this, LoginPage.class);
+                Intent intent = new Intent(PVCEndScreen.this, LoginPage.class);
 
                 startActivity(intent);
             }
