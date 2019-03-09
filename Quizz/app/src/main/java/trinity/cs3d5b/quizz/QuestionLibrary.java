@@ -115,4 +115,24 @@ public class QuestionLibrary {
         return numberOfQuestions;
     }
 
+    private int[] randomNumberArray(int size){
+
+        int temp;
+        Random rand = new Random();
+
+        int arr[] =  {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
+        for(int j = 0; j < 10; j++){
+            temp = rand.nextInt(size);
+
+            for(int k = 0; k < j; k++){
+                if(arr[k] == temp){
+                    temp = rand.nextInt(size);
+                    k = -1;
+                }
+            }
+            arr[j] = temp;
+        }
+        return arr;
+    }
+
 }
