@@ -55,12 +55,16 @@ public class MainActivity extends AppCompatActivity {
     long remainMilli = 0;
     boolean isRunning = false;
 
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+        mediaPlayer.start();
 
         // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
@@ -256,7 +260,8 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE, scoreMessage);
             startActivity(intent);
         }
-        MediaPlayer mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+        mediaPlayer.release();
+        mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
         mediaPlayer.start();
 
         timer.start();
