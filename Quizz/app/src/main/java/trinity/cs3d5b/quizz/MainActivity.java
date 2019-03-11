@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -57,9 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
@@ -219,7 +220,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
-
         if (!gameOver) {
             currentQuestion = mQuestionLibrary.getQuestion(mQuestionNumber);
 
@@ -256,6 +256,9 @@ public class MainActivity extends AppCompatActivity {
             intent.putExtra(EXTRA_MESSAGE, scoreMessage);
             startActivity(intent);
         }
+        MediaPlayer mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+        mediaPlayer.start();
+
         timer.start();
     }
 
