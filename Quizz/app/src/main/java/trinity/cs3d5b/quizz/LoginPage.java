@@ -72,7 +72,7 @@ public class LoginPage extends AppCompatActivity  {
             //If not we display an Alert box to force him to put choose a picture
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginPage.this);
             builder.setCancelable(true);
-            builder.setTitle("You need to choose a profil picture");
+            builder.setTitle("You need to choose a profile picture");
 
             builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                 @Override
@@ -86,7 +86,7 @@ public class LoginPage extends AppCompatActivity  {
         }
 
         else {
-            //If every information are complet, we can go to the quizz part
+            //If every information are complete, we can go to the quizz part
             String name = userName.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
             if(picture!=null) {

@@ -55,6 +55,24 @@ public class QuestionLibrary {
             numberOfQsInDB = 10;
         }
 
+        else if(Qlibrary.equals("Movies")){
+            istream = context.getResources().openRawResource(R.raw.movies);
+            numberOfQsInDB = 13;
+        }
+
+        else if(Qlibrary.equals("Computer Science")){
+            istream = context.getResources().openRawResource(R.raw.computer_science);
+            numberOfQsInDB = 12;
+        }
+        else if(Qlibrary.equals("Engineering")){
+            istream = context.getResources().openRawResource(R.raw.engineering);
+            numberOfQsInDB = 10;
+        }
+        else if(Qlibrary.equals("The Simpsons")){
+            istream = context.getResources().openRawResource(R.raw.the_simpsons);
+            numberOfQsInDB = 13;
+        }
+
         else{
             istream = context.getResources().openRawResource(R.raw.general_knowledge);
             numberOfQsInDB = 10;

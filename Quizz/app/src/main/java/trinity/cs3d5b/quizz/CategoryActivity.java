@@ -48,13 +48,6 @@ public class CategoryActivity extends AppCompatActivity {
         */
     }
 
-    /*protected void onClickCategory(String catMessage){
-        Intent intent = new Intent(CategoryActivity.this, MainActivity.class);
-        intent.putExtra(EXTRA_CATEGORY, catMessage);
-        startActivity(intent);
-    }
-    */
-
     public void categoryClick(View view) {
 
         String categoryMessage;
