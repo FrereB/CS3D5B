@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         Qlib = intent.getStringExtra(CategoryActivity.EXTRA_CATEGORY);
 
 
-        //mQuestionLibrary.setQuestionLibrary("General Knowledge");
         mQuestionLibrary.setQuestionLibrary(Qlib);
 
         if (!AuthCache.Companion.isLoggedIn()) {

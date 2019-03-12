@@ -22,10 +22,8 @@ import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVAT
 import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
 public class PVC extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
+    private QuestionLibrary mQuestionLibrary;
 
-    private String Qlib = "";
-
-    private QuestionLibrary mQuestionLibrary = new QuestionLibrary(getApplicationContext());
 
     private TextView mScoreView;
 
@@ -56,6 +54,9 @@ public class PVC extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+      mQuestionLibrary = new QuestionLibrary(this);
+        mQuestionLibrary.setQuestionLibrary("General Knowledge");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pvc);
 
