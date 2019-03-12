@@ -72,6 +72,10 @@ public class QuestionLibrary {
             istream = context.getResources().openRawResource(R.raw.the_simpsons);
             numberOfQsInDB = 13;
         }
+        else if(Qlibrary.equals("Quick Maths")){
+            istream = context.getResources().openRawResource(R.raw.quick_maths);
+            numberOfQsInDB = 10;
+        }
 
         else{
             istream = context.getResources().openRawResource(R.raw.general_knowledge);

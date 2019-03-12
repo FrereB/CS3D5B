@@ -141,44 +141,10 @@
         android:layout_marginEnd="8dp"
         android:onClick="categoryClick"
         android:padding="8dp"
-        android:text="Category 8"
+        android:text="Quick Maths"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/category7"
-        tools:layout_conversion_absoluteHeight="0dp"
-        tools:layout_conversion_absoluteWidth="0dp" />
-
-    <Button
-        android:id="@+id/category9"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="categoryClick"
-        android:padding="8dp"
-        android:text="Category 9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category8"
-        tools:layout_conversion_absoluteHeight="0dp"
-        tools:layout_conversion_absoluteWidth="0dp" />
-
-    <Button
-        android:id="@+id/category10"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:onClick="categoryClick"
-        android:padding="8dp"
-        android:text="Category 10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category9"
         tools:layout_conversion_absoluteHeight="0dp"
         tools:layout_conversion_absoluteWidth="0dp" />
 
