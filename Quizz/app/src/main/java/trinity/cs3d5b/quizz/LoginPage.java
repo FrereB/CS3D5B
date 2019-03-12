@@ -29,11 +29,12 @@ import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVAT
 import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
 
 
-public class LoginPage extends AppCompatActivity  {
+public class LoginPage extends AppCompatActivity {
 
     public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
     public static String picture;
     public static Uri uriSelectedImage;
+
 
     public static final int PICTURE = 1;//The request code for profil picture;
 
@@ -61,6 +62,7 @@ public class LoginPage extends AppCompatActivity  {
         EditText userName = findViewById(R.id.name);
 
 
+
         //Verification if the user has a username or not => Mandatory
         if (userName.getText().toString().trim().equals("")) {
             userName.setError("Required!");
@@ -68,7 +70,7 @@ public class LoginPage extends AppCompatActivity  {
 
 
         //Verification if the user has a profile picture or not => Mandatory
-        else if(uriSelectedImage==null && picture==null){
+        else if (uriSelectedImage == null && picture == null) {
             //If not we display an Alert box to force him to put choose a picture
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginPage.this);
             builder.setCancelable(true);
@@ -83,13 +85,11 @@ public class LoginPage extends AppCompatActivity  {
                 }
             });
             builder.show();
-        }
-
-        else {
-            //If every information are complet, we can go to the quizz part
+        } else {
+            //If every information are complet, we can go to the quiz part
             String name = userName.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
-            if(picture!=null) {
+            if (picture != null) {
                 Bundle stats = new Bundle();
                 stats.putString("picture", picture);
                 stats.putInt("type", 1);
@@ -102,18 +102,17 @@ public class LoginPage extends AppCompatActivity  {
                         PICTURE_TYPE_AVATAR,
                         picture,
                         0
-                        );
+                );
                 UserDatabase userDatabase = new UserDatabase();
                 userDatabase.insert(newUser, null);
 
                 AuthCache.Companion.login(newUser);
-            }
-            else if(uriSelectedImage!=null){
+            } else if (uriSelectedImage != null) {
                 Bundle stats = new Bundle();
                 stats.putInt("type", 2);
 
                 intent.putExtras(stats);
-                intent.putExtra("imageUri",uriSelectedImage);
+                intent.putExtra("imageUri", uriSelectedImage);
                 setResult(RESULT_OK, intent);
                 startActivity(intent);
 
@@ -137,7 +136,7 @@ public class LoginPage extends AppCompatActivity  {
     }
 
     //Action to play against the computer
-    protected void goToPVC(final View view){
+    protected void goToPVC(final View view) {
         //We give the information to the main activity
         Intent intent = new Intent(this, DifficultyChooser.class);
         EditText userName = findViewById(R.id.name);
@@ -150,7 +149,7 @@ public class LoginPage extends AppCompatActivity  {
 
 
         //Verification if the user has a profile picture or not => Mandatory
-        else if(uriSelectedImage==null && picture==null){
+        else if (uriSelectedImage == null && picture == null) {
             //If not we display an Alert box to force him to put choose a picture
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginPage.this);
             builder.setCancelable(true);
@@ -165,12 +164,11 @@ public class LoginPage extends AppCompatActivity  {
                 }
             });
             builder.show();
-        }
-        else {
+        } else {
             //If all the data is complete, we can go to choosing the difficulty
             String name = userName.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
-            if(picture!=null) {
+            if (picture != null) {
                 Bundle stats = new Bundle();
                 stats.putString("picture", picture);
                 stats.putInt("type", 1);
@@ -190,13 +188,12 @@ public class LoginPage extends AppCompatActivity  {
                 userDatabase.insert(newUser, null);
 
                 AuthCache.Companion.login(newUser);
-            }
-            else if(uriSelectedImage!=null){
+            } else if (uriSelectedImage != null) {
                 Bundle stats = new Bundle();
                 stats.putInt("type", 2);
 
                 intent.putExtras(stats);
-                intent.putExtra("imageUri",uriSelectedImage);
+                intent.putExtra("imageUri", uriSelectedImage);
                 setResult(RESULT_OK, intent);
                 startActivity(intent);
 
@@ -251,16 +248,16 @@ public class LoginPage extends AppCompatActivity  {
 
                     picture = extras.getString("picture");
                     int type = extras.getInt("type");
+                    uriSelectedImage = intent.getParcelableExtra("imageUri");
 
+                    if (type == 1) { // Avatar already available
 
-                    if (type == 1) { // Photo from the gallery of the user
                         //We get the id and we display the picture
                         int id = getResources().getIdentifier(picture, "drawable", getPackageName());
                         profilePicture.setImageResource(id);
                         profilePicture.setTag(picture);
-                    } else if (type == 2) { // Avatar already available
-                        //We get the uri and we display the picture
-                        uriSelectedImage = intent.getParcelableExtra("imageUri");
+                    } else if (type == 2) {  // Photo from the gallery of the user
+
 
                         //All the path of the picture from the user phone
                         String[] filePathCol = {MediaStore.Images.Media.DATA};
@@ -288,20 +285,13 @@ public class LoginPage extends AppCompatActivity  {
     }
 
 
-
-//Action to go to selection of the picture
+    //Action to go to selection of the picture
     protected void goToPicture(View view) {
-        Intent intent = new Intent(this,ProfilePicture.class);
-        startActivityForResult(intent,PICTURE);
+        Intent intent = new Intent(this, ProfilePicture.class);
+        startActivityForResult(intent, PICTURE);
     }
 
-    protected void goToCategory(){
 
-        Intent intent = new Intent(this, CategoryActivity.class);
-        startActivityForResult(intent,CATEGORY_REQUEST);
-
-        return;
-    }
 }
 
 

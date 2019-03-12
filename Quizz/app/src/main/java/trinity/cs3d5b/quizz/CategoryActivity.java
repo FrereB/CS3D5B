@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.net.*;
 
 public class CategoryActivity extends AppCompatActivity {
 
@@ -65,17 +66,24 @@ public class CategoryActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         String picture = extras.getString("picture");
         int type = extras.getInt("type");
-        stats.putString("picture", picture);
+        if(picture != null) {
+            stats.putString("picture", picture);
+        }
+         Uri uriSelectedImage = mIntent.getParcelableExtra("imageUri");
+        if(uriSelectedImage!=null) {
+            mIntent.putExtra("imageUri", uriSelectedImage);
+        }
         stats.putInt("type", type);
         mIntent.putExtras(stats);
 
         mIntent.putExtra(EXTRA_NAME,name);
 
         categoryMessage = (String) ( (Button) findViewById(view.getId())).getText();
-        System.out.print(categoryMessage);
+       // System.out.print(categoryMessage);
         stats.putString("category",categoryMessage );
-        mIntent.putExtras(stats);
+       // mIntent.putExtras(stats);
         mIntent.putExtra(EXTRA_CATEGORY,categoryMessage);
-        setResult(RESULT_OK, mIntent);startActivity(mIntent);
+       // setResult(RESULT_OK, mIntent);
+        startActivity(mIntent);
     }
 }
