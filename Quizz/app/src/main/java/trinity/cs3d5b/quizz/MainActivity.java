@@ -29,13 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    //private String Qlib = "General Knowledge";
     private String Qlib = "";
 
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary(this);
 
     private static String picture;
-    private Uri uriSelectedImage;
     private UserModel userModel;
 
     private TextView mScoreView;

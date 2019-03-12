@@ -23,7 +23,7 @@ import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLO
 public class PVC extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    private String Qlib = "General Knowledge";
+    private String Qlib = "";
 
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary(getApplicationContext());
 

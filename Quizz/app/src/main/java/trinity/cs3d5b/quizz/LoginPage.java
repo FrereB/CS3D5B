@@ -31,122 +31,49 @@ import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLO
 
 public class LoginPage extends AppCompatActivity {
 
-    public static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
-    public static String picture;
-    public static Uri uriSelectedImage;
-
-
-    public static final int PICTURE = 1;//The request code for profil picture;
-
-    //public static final String EXTRA_CATEGORY = "trinity.cs3d5b.quizz.CATEGORY";
-    private final int PICK_PICTURE_REQUEST = 1; //The request code
-    private final int CATEGORY_REQUEST = 3;   //Other request code
-
-    private String category;
+    protected static final String EXTRA_NAME = "trinity.cs3d5b.quizz.NAME";
+    private static String picture;
+    private static Uri uriSelectedImage;
+    private static final int PICTURE = 1;//The request code for profil picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
 
-        category = "";
     }
-
 
     //Go to Main Activity
     protected void goToMainActivity(final View view) {
-
-
         Intent intent = new Intent(this, CategoryActivity.class);
-        //We give the informaion to the main activity
-        EditText userName = findViewById(R.id.name);
-
-
-
-        //Verification if the user has a username or not => Mandatory
-        if (userName.getText().toString().trim().equals("")) {
-            userName.setError("Required!");
-        }
-
-
-        //Verification if the user has a profile picture or not => Mandatory
-        else if (uriSelectedImage == null && picture == null) {
-            //If not we display an Alert box to force him to put choose a picture
-            AlertDialog.Builder builder = new AlertDialog.Builder(LoginPage.this);
-            builder.setCancelable(true);
-            builder.setTitle("You need to choose a profil picture");
-
-            builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    //After the close of the dialog box we open the page to choose the profil picture
-                    goToPicture(view);
-
-                }
-            });
-            builder.show();
-        } else {
-            //If every information are complet, we can go to the quiz part
-            String name = userName.getText().toString();
-            intent.putExtra(EXTRA_NAME, name);
-            if (picture != null) {
-                Bundle stats = new Bundle();
-                stats.putString("picture", picture);
-                stats.putInt("type", 1);
-                intent.putExtras(stats);
-                setResult(RESULT_OK, intent);
-                startActivity(intent);
-                UserModel newUser = new UserModel(
-                        UUID.randomUUID().toString(),
-                        name,
-                        PICTURE_TYPE_AVATAR,
-                        picture,
-                        0
-                );
-                UserDatabase userDatabase = new UserDatabase();
-                userDatabase.insert(newUser, null);
-
-                AuthCache.Companion.login(newUser);
-            } else if (uriSelectedImage != null) {
-                Bundle stats = new Bundle();
-                stats.putInt("type", 2);
-
-                intent.putExtras(stats);
-                intent.putExtra("imageUri", uriSelectedImage);
-                setResult(RESULT_OK, intent);
-                startActivity(intent);
-
-                PictureEncoder pictureEncoder = new PictureEncoder();
-                Bitmap imageBitmap = pictureEncoder.convertUriToBitmap(this, uriSelectedImage);
-                String base64 = pictureEncoder.encodeBitmapToBase64(imageBitmap);
-
-                UserModel newUser = new UserModel(
-                        UUID.randomUUID().toString(),
-                        name,
-                        PICTURE_TYPE_UPLOAD,
-                        base64,
-                        0
-                );
-                UserDatabase userDatabase = new UserDatabase();
-                userDatabase.insert(newUser, null);
-
-                AuthCache.Companion.login(newUser);
-            }
-        }
+        checkLogin(view,intent);
     }
 
     //Action to play against the computer
     protected void goToPVC(final View view) {
         //We give the information to the main activity
         Intent intent = new Intent(this, DifficultyChooser.class);
+        checkLogin(view,intent);
+        }
+
+
+    //Action to go to the LeaderBoard
+    protected void goToLeaderboard(View view) {
+
+        Intent intent = new Intent(this, LeaderBoard.class);
+        startActivity(intent);
+    }
+
+
+
+//Check if all the informations required are presents and store in database
+    protected void checkLogin(final View view, Intent intent) {
+        //We give the informaion to the main activity
         EditText userName = findViewById(R.id.name);
-
-
         //Verification if the user has a username or not => Mandatory
         if (userName.getText().toString().trim().equals("")) {
             userName.setError("Required!");
         }
-
 
         //Verification if the user has a profile picture or not => Mandatory
         else if (uriSelectedImage == null && picture == null) {
@@ -165,7 +92,7 @@ public class LoginPage extends AppCompatActivity {
             });
             builder.show();
         } else {
-            //If all the data is complete, we can go to choosing the difficulty
+            //If all the data are complete, we can go to choosing the difficulty
             String name = userName.getText().toString();
             intent.putExtra(EXTRA_NAME, name);
             if (picture != null) {
@@ -214,24 +141,13 @@ public class LoginPage extends AppCompatActivity {
                 AuthCache.Companion.login(newUser);
             }
 
-            //goToCategory();
-            //intent.putExtra(EXTRA_CATEGORY, category);
-
-            startActivity(intent);
         }
 
     }
 
-    //Action to go to the LeaderBoard
 
-    protected void goToLeaderboard(View view) {
 
-        Intent intent = new Intent(this, LeaderBoard.class);
-        startActivity(intent);
-    }
-
-// Receive result
-
+    // Receive result
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 
@@ -255,9 +171,8 @@ public class LoginPage extends AppCompatActivity {
                         //We get the id and we display the picture
                         int id = getResources().getIdentifier(picture, "drawable", getPackageName());
                         profilePicture.setImageResource(id);
-                        profilePicture.setTag(picture);
-                    } else if (type == 2) {  // Photo from the gallery of the user
 
+                    } else if (type == 2) {  // Photo from the gallery of the user
 
                         //All the path of the picture from the user phone
                         String[] filePathCol = {MediaStore.Images.Media.DATA};
