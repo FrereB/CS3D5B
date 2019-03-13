@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import java.util.concurrent.TimeUnit;
 
@@ -56,12 +57,16 @@ public class MainActivity extends AppCompatActivity {
     long remainMilli = 0;
     boolean isRunning = false;
 
+    MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+        mediaPlayer.start();
 
         // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
@@ -185,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mediaPlayer.release();
                 Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
@@ -208,8 +214,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
+        mediaPlayer.release();
 
         if (!gameOver) {
+            mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+            mediaPlayer.start();
+
             currentQuestion = mQuestionLibrary.getQuestion(mQuestionNumber);
 
             mQuestionView.setText(currentQuestion.getQuestion());
@@ -271,13 +281,17 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             remainMilli = millisUntilFinished;
+            long seconds = TimeUnit.MILLISECONDS.toSeconds(remainMilli)- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainMilli));
+            long millis = TimeUnit.MILLISECONDS.toMillis(remainMilli) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(remainMilli));
+            long maxSeconds = 15;
 
             //Format to display the timer
-            String hms = String.format("%02d . %03d",
-                    TimeUnit.MILLISECONDS.toSeconds(remainMilli)- TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(remainMilli)),
-                    TimeUnit.MILLISECONDS.toMillis(remainMilli) - TimeUnit.SECONDS.toMillis(TimeUnit.MILLISECONDS.toSeconds(remainMilli)));
+            String hms = String.format("%02d . %03d", seconds, millis);
 
             timerTextView.setText(hms);
+
+            float log1=(float)(Math.log(maxSeconds-seconds)/Math.log(maxSeconds));
+            mediaPlayer.setVolume(log1,log1);
 
         }
 
