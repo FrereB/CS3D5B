@@ -19,19 +19,23 @@ import android.media.MediaPlayer;
 import java.util.concurrent.TimeUnit;
 
 import trinity.cs3d5b.quizz.authentication.AuthCache;
+import trinity.cs3d5b.quizz.database.PictureEncoder;
 import trinity.cs3d5b.quizz.database.UserDatabase;
 import trinity.cs3d5b.quizz.database.UserModel;
+
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_AVATAR;
+import static trinity.cs3d5b.quizz.database.UserSchema.COLUMNS.PICTURE_TYPE_UPLOAD;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String EXTRA_MESSAGE = "trinity.cs3d5b.quizz.MESSAGE";
 
-    //private String Qlib = "General Knowledge";
     private String Qlib = "";
 
     private QuestionLibrary mQuestionLibrary = new QuestionLibrary(this);
 
-    public static String picture;
+    private static String picture;
+    private UserModel userModel;
 
     private TextView mScoreView;
     private TextView mQuestionView;
@@ -43,12 +47,10 @@ public class MainActivity extends AppCompatActivity {
     private Question currentQuestion;
 
     private String mAnswer;
-    private String name = "";
-    private String image = "";
+    private String name;
     private int mScore = 0;
     private int mQuestionNumber = 0;
     private boolean gameOver = false;
-
     //timer code
     private TextView timerTextView;
     private CounterClass timer;
@@ -71,45 +73,32 @@ public class MainActivity extends AppCompatActivity {
         name = intent.getStringExtra(CategoryActivity.EXTRA_NAME);
         Qlib = intent.getStringExtra(CategoryActivity.EXTRA_CATEGORY);
 
-        //mQuestionLibrary.setQuestionLibrary("General Knowledge");
+
         mQuestionLibrary.setQuestionLibrary(Qlib);
 
+        if (!AuthCache.Companion.isLoggedIn()) {
+            throw new IllegalArgumentException("Not logged in");
+        }
+        userModel = AuthCache.Companion.getUserModel();
 
         ImageView profilePicture = (ImageView) findViewById(R.id.pictureprofile);
+        switch (userModel.getProfilePictureType()) {
+            case PICTURE_TYPE_AVATAR:
+                //We get the id and we display the picture
+                int id = getResources().getIdentifier(userModel.getProfilePictureData(),
+                        "drawable", getPackageName());
+                profilePicture.setImageResource(id);
+                break;
 
-        Bundle extras = intent.getExtras();
-        picture = extras.getString("picture");
-        int type = extras.getInt("type");
+            case PICTURE_TYPE_UPLOAD:
+                String base64 = userModel.getProfilePictureData();
+                Bitmap image = new PictureEncoder().decodeBase64ToBitmap(base64);
+                profilePicture.setImageBitmap(image);
+                break;
 
-
-        if (type == 1) { // Photo from the gallery of the user
-            //We get the id and we display the picture
-            int id = getResources().getIdentifier(picture, "drawable", getPackageName());
-            profilePicture.setImageResource(id);
-            profilePicture.setTag(picture);
-        } else if (type == 2) { // Avatar already available
-            //We get the uri and we display the picture
-            Uri uriSelectedImage = intent.getParcelableExtra("imageUri");
-
-            //All the path of the picture from the user phone
-            String[] filePathCol = {MediaStore.Images.Media.DATA};
-
-            //Cursor to access to the path of the picture
-            Cursor cursor = this.getContentResolver().query(uriSelectedImage, filePathCol, null, null, null);
-            cursor.moveToFirst();
-
-            //We recover the path of the picture
-
-            int columIndex = cursor.getColumnIndex(filePathCol[0]);
-            String imgPath = cursor.getString(columIndex);
-            cursor.close();
-            //get the Image
-            Bitmap image = BitmapFactory.decodeFile(imgPath);
-            //Display the picture
-
-            profilePicture.setImageBitmap(image);
-
-
+            default:
+                throw new IllegalArgumentException("Unknown profile picture type = "
+                        + userModel.getProfilePictureType());
         }
 
         // Capture the layout's TextView and set the string as its text

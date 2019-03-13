@@ -150,12 +150,11 @@ public class ProfilePicture extends AppCompatActivity {
                 int columIndex = cursor.getColumnIndex(filePathCol[0]);
                 String imgPath = cursor.getString(columIndex);
                 cursor.close();
+
                 //Récupération Image
                 Bitmap image = BitmapFactory.decodeFile(imgPath);
 
-
-
-
+                //Storage of the information
                 stats.putInt("type", 2);
                 mIntent.putExtras(stats);
 
