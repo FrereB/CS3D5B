@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       // mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
-//        mediaPlayer.start();
+        mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+        mediaPlayer.start();
 
         // Get the Intent that started this activity and extract the strings
         Intent intent = getIntent();
@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
         mQuitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mediaPlayer.release();
+                mediaPlayer.release();
                 Toast.makeText(MainActivity.this, "Game Over", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(MainActivity.this, EndScreenActivity.class);
                 String message = Integer.toString(mScore);
@@ -214,11 +214,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void updateQuestion() {
-//        mediaPlayer.release();
+        mediaPlayer.release();
 
         if (!gameOver) {
-            //mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
-           // mediaPlayer.start();
+            mediaPlayer= MediaPlayer.create(MainActivity.this,R.raw.clock);
+            mediaPlayer.start();
 
             currentQuestion = mQuestionLibrary.getQuestion(mQuestionNumber);
 
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
             timerTextView.setText(hms);
 
             float log1=(float)(Math.log(maxSeconds-seconds)/Math.log(maxSeconds));
-           // mediaPlayer.setVolume(log1,log1);
+            mediaPlayer.setVolume(log1,log1);
 
         }
 
