@@ -74,7 +74,7 @@ public class QuestionLibrary {
         }
         else if(Qlibrary.equals("Quick Maths")){
             istream = context.getResources().openRawResource(R.raw.quick_maths);
-            numberOfQsInDB = 10;
+            numberOfQsInDB = 11;
         }
 
         else{
@@ -143,7 +143,7 @@ public class QuestionLibrary {
         Random rand = new Random();
 
         int arr[] =  {-1,-1,-1,-1,-1,-1,-1,-1,-1,-1};
-        for(int j = 0; j < 10; j++){
+        for(int j = 0; j < 10; j++){    //because 10 questions in 1 round
             temp = rand.nextInt(size);
 
             for(int k = 0; k < j; k++){
@@ -156,5 +156,4 @@ public class QuestionLibrary {
         }
         return arr;
     }
-
 }
